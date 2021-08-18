@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GYM</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="add_workout">Skapa träningspass</string>
+    <string name="add_exercise">Skapa övning</string>
+    <string name="create_new_workout">Skapa ett nytt träningspass</string>
+    <string name="hint_workout_name">Namn på träningspass</string>
+
+    <string name="positive_button">OK</string>
+    <string name="negative_button">Avbryt</string>
+
+    <string name="delete_workout">Radera träningspass?</string>
+    <string name="no_workouts">Det finns inga träningspass, skapa ett!</string>
+
+    <string name="delete_exercise">Ta bort övning </string>
+    <string name="no_exercises">Det finns inga övningar, skapa en!</string>
+    <string name="create_new_exercise">Skapa övning</string>
+    <string name="hint_exercise_name">Namn på övning</string>
+
+    <string name="delete_exercise_log">Ta bort träningsdata?</string>
+    <string name="no_exercises_data">Det finns ingen data, lägg till!</string>
+    <string name="create_new_exercise_data">Lägg till data till övningen</string>
+
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="email">Email</string>
+    <string name="name">Namn på träningspass</string>
+    <string name="mobno">Mobile No.</string>
+    <string name="reg_no">Reg</string>
+
+    <string name="exercise_reps_ammount">Reps: %d</string>
+    <string name="exercise_sets_ammount">Sets: %d</string>
+    <string name="exercise_weight_ammount">Vikt: %d</string>
+
+
+</resources>

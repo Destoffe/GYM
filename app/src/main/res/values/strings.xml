@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">GYM</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="add_workout">Create workout</string>
+    <string name="add_exercise">Add exercise</string>
+
+    <string name="create_new_workout">Create a new workout</string>
+    <string name="hint_workout_name">Workout name</string>
+    <string name="delete_workout">Delete Workout?</string>
+    <string name="no_workouts">There are no workouts, create one!</string>
+
+    <string name="positive_button">OK</string>
+    <string name="negative_button">Cancel</string>
+
+    <string name="delete_exercise">Delete exercise </string>
+    <string name="no_exercises">There are no exercises, create one!</string>
+    <string name="create_new_exercise">Create a new exercise</string>
+    <string name="hint_exercise_name">Exercise name</string>
+
+
+    <string name="delete_exercise_log">Delete Exercise data?</string>
+    <string name="no_exercises_data">There are no data, add data!</string>
+    <string name="create_new_exercise_data">Add data to this exercise</string>
+
+    <string name="message">Message</string>
+    <string name="send">Send</string>
+    <string name="email">Email</string>
+    <string name="name">Workout name</string>
+    <string name="mobno">Mobile No.</string>
+    <string name="reg_no">Reg</string>
+
+
+    <string name="exercise_reps_ammount">Reps: %d</string>
+    <string name="exercise_sets_ammount">Sets: %d</string>
+    <string name="exercise_weight_ammount">Weight: %d</string>
+</resources>
