@@ -1,7 +1,10 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
+
+import com.stoffe.gym.database.entities.Exercise;
+import com.stoffe.gym.database.entities.ExerciseData;
 
 import java.util.List;
 

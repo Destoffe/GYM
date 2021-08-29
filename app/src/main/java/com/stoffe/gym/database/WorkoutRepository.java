@@ -1,7 +1,9 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database;
 
 import android.app.Application;
 import android.os.AsyncTask;
+
+import com.stoffe.gym.database.entities.Workout;
 
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class WorkoutRepository {
         new deleteWorkoutAsyncTask(workoutDao).execute(workout);
     }
 
+    void update(Workout workout){
+        new updateWorkoutAsyncTask(workoutDao).execute(workout);
+    }
+
     private static class insertWorkoutAsyncTask extends AsyncTask<Workout,Void,Void>{
         private WorkoutDao taskDao;
 
@@ -52,6 +58,20 @@ public class WorkoutRepository {
         @Override
         protected Void doInBackground(Workout... workout) {
             taskDao.deleteWorkout(workout[0]);
+            return null;
+        }
+    }
+
+    private static class updateWorkoutAsyncTask extends AsyncTask<Workout,Void,Void>{
+        private WorkoutDao taskDao;
+
+        updateWorkoutAsyncTask(WorkoutDao workoutDao){
+            taskDao = workoutDao;
+        }
+
+        @Override
+        protected Void doInBackground(Workout... workouts) {
+            taskDao.updateWorkout(workouts[0]);
             return null;
         }
     }

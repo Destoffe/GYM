@@ -1,4 +1,9 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database;
+
+import com.stoffe.gym.database.entities.Exercise;
+import com.stoffe.gym.database.entities.ExerciseData;
+import com.stoffe.gym.database.entities.Summary;
+import com.stoffe.gym.database.entities.Workout;
 
 import java.util.List;
 
@@ -7,6 +12,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface WorkoutDao {
@@ -20,11 +26,15 @@ public interface WorkoutDao {
     @Query("SELECT * FROM Workout WHERE name LIKE :first LIMIT 1")
     Workout findByName(String first);
 
+    @Update()
+    void updateWorkout(Workout workout);
+
     @Insert
     void insertAllWorkout(Workout... workouts);
 
     @Delete
     void deleteWorkout(Workout workout);
+
 
     @Query("SELECT * FROM exercise")
     LiveData<List<Exercise>> getAllExercise();
@@ -49,4 +59,16 @@ public interface WorkoutDao {
 
     @Delete
     void deleteExerciseData(ExerciseData exerciseData);
+
+    @Delete
+    void insertAllSummary(Summary... summary);
+
+    @Delete
+    void deleteSummary(Summary summary);
+
+    @Update()
+    void updateSummary(Summary summary);
+
+    @Query("SELECT * FROM summary")
+    LiveData<List<Summary>> getAllSummary();
 }

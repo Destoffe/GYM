@@ -1,4 +1,4 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

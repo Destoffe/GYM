@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.stoffe.gym.Database.ExerciseData;
+import com.stoffe.gym.database.entities.ExerciseData;
 
+import com.stoffe.gym.Helpers.ItemTouchHelperViewHolder;
 import com.stoffe.gym.R;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapter.ViewHolder> {
+public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapter.ItemViewHolder> {
 
     private List<ExerciseData> dataSet;
 
@@ -28,28 +30,42 @@ public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapte
         void onLongItemClick(ExerciseData exercise);
     }
 
+    public interface OnDragStartListener {
+        void onDragStarted(RecyclerView.ViewHolder viewHolder);
+    }
+    private final OnDragStartListener mDragStartListener;
     private final OnItemClickListener listener;
     private final OnItemLongClickListener longClickListener;
 
 
-    public ExerciseDataAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener) {
+    public ExerciseDataAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener,OnDragStartListener dragStartListener) {
         this.dataSet = new ArrayList<>();
         this.listener = listener;
         this.longClickListener = longClickListener;
+        this.mDragStartListener = dragStartListener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.exercise_data_list_item, parent, false);
 
-        return new ViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.bind(dataSet.get(position), listener, longClickListener);
+        /* TODO SUPPORT FOR DRAG/SWIPE IN FUTURE
+        holder.handleView.setOnTouchListener((view, motionEvent) -> {
+            if(motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                mDragStartListener.onDragStarted(holder);
+            }
+            return false;
+        });
+
+         */
 
     }
 
@@ -58,18 +74,20 @@ public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapte
         return dataSet.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         private final TextView setsTextView;
         private final TextView repsTextView;
         private final TextView weightTextView;
         private final TextView dateTextView;
+        public final ImageView handleView;
 
-        public ViewHolder(View view) {
+        public ItemViewHolder(View view) {
             super(view);
             setsTextView = view.findViewById(R.id.set);
             repsTextView = view.findViewById(R.id.rep);
             weightTextView = view.findViewById(R.id.weight);
             dateTextView = view.findViewById(R.id.date);
+            handleView =  view.findViewById(R.id.handle);
         }
 
 
@@ -89,6 +107,14 @@ public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapte
                 //longClickListener.onLongItemClick(exercise);
                 return false;
             });
+        }
+
+        @Override
+        public void onItemSelected() {
+        }
+
+        @Override
+        public void onItemClear() {
         }
     }
 

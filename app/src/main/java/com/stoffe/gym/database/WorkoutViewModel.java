@@ -1,6 +1,11 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database;
 
 import android.app.Application;
+
+import com.stoffe.gym.database.entities.Exercise;
+import com.stoffe.gym.database.entities.ExerciseData;
+import com.stoffe.gym.database.entities.Summary;
+import com.stoffe.gym.database.entities.Workout;
 
 import java.util.List;
 
@@ -12,6 +17,7 @@ public class WorkoutViewModel extends AndroidViewModel {
 
     WorkoutRepository workoutRepository;
     ExerciseRepository exerciseRepository;
+    SummaryRepository summaryRepository;
     LiveData<List<Workout>> workoutList;
     private final MutableLiveData<Workout> currentWorkout;
     private final MutableLiveData<Exercise> currentExercise;
@@ -20,6 +26,7 @@ public class WorkoutViewModel extends AndroidViewModel {
         super(application);
         workoutRepository = new WorkoutRepository(application);
         exerciseRepository = new ExerciseRepository(application);
+        summaryRepository = new SummaryRepository(application);
         workoutList = workoutRepository.getWorkout();
         currentWorkout = new MutableLiveData<>();
         currentExercise = new MutableLiveData<>();
@@ -31,6 +38,10 @@ public class WorkoutViewModel extends AndroidViewModel {
 
     public void insertWorkout(Workout workout){
         workoutRepository.insert(workout);
+    }
+
+    public void updateWorkout(Workout workout){
+        workoutRepository.update(workout);
     }
 
     public void setCurrentWorkout(Workout workout){
@@ -79,5 +90,17 @@ public class WorkoutViewModel extends AndroidViewModel {
 
     public void deleteExerciseData(ExerciseData exerciseData){
         exerciseRepository.deleteExerciseData(exerciseData);
+    }
+
+    public LiveData<List<Summary>> getAllSummaries(){
+        return summaryRepository.getSummary();
+    }
+
+    public void insertSummary(Summary summary){
+        summaryRepository.insert(summary);
+    }
+
+    public void deleteSummary(Summary summary){
+        summaryRepository.delete(summary);
     }
 }

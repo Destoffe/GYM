@@ -3,11 +3,12 @@ package com.stoffe.gym.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.stoffe.gym.Database.Exercise;
-import com.stoffe.gym.Database.Workout;
+import com.stoffe.gym.database.entities.Exercise;
 import com.stoffe.gym.R;
+import com.stoffe.gym.database.entities.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +28,20 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         void onLongItemClick(Exercise exercise);
     }
 
+    public interface OnButtonClickListener {
+        void onItemClick(Exercise exercise);
+    }
+
     private final OnItemClickListener listener;
     private final OnItemLongClickListener longClickListener;
+    private final OnButtonClickListener buttonClickListener;
 
 
-    public ExerciseAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener){
+    public ExerciseAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener, OnButtonClickListener buttonClickListener){
         this.dataSet = new ArrayList<>();
         this.listener = listener;
         this.longClickListener = longClickListener;
+        this.buttonClickListener = buttonClickListener;
     }
 
     @NonNull
@@ -48,7 +55,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(dataSet.get(position),listener,longClickListener);
+        holder.bind(dataSet.get(position),listener,longClickListener,buttonClickListener);
 
     }
 
@@ -59,23 +66,29 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView nameTextView;
+        private final ImageButton shortcutBtn;
 
         public ViewHolder(View view) {
             super(view);
             nameTextView = (TextView) view.findViewById(R.id.name);
+            shortcutBtn = view.findViewById(R.id.addDataShortcut);
         }
 
 
-        public void bind(final Exercise exercise, final OnItemClickListener listener,final OnItemLongClickListener longClickListener) {
+        public void bind(final Exercise exercise, final OnItemClickListener listener,final OnItemLongClickListener longClickListener,final OnButtonClickListener buttonClickListener) {
             nameTextView.setText(exercise.name);
             itemView.setOnClickListener(view ->
                     listener.onItemClick(exercise)
             );
 
+            shortcutBtn.setOnClickListener(view -> buttonClickListener.onItemClick(exercise));
+
             itemView.setOnLongClickListener(view -> {
                 longClickListener.onLongItemClick(exercise);
                 return false;
             });}
+
+
     }
 
     public void setData(List<Exercise> data){

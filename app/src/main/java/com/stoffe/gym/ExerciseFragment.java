@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 
 import com.stoffe.gym.Adapters.ExerciseDataAdapter;
 import com.stoffe.gym.Adapters.LogDataDialogLayout;
-import com.stoffe.gym.Database.ExerciseData;
-import com.stoffe.gym.Database.WorkoutViewModel;
+import com.stoffe.gym.Helpers.Utils;
+import com.stoffe.gym.database.entities.ExerciseData;
+import com.stoffe.gym.database.WorkoutViewModel;
 import com.stoffe.gym.databinding.FragmentExerciseBinding;
 
 import java.util.ArrayList;
@@ -21,14 +22,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
-public class ExerciseFragment extends Fragment {
+public class ExerciseFragment extends Fragment{
 
     private FragmentExerciseBinding binding;
     private WorkoutViewModel viewModel;
     ExerciseDataAdapter exerciseDataAdapter;
     List<ExerciseData> exerciseDataList;
-
+    private ItemTouchHelper mItemTouchHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,9 +43,10 @@ public class ExerciseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
         exerciseDataList = new ArrayList<>();
-        exerciseDataAdapter = new ExerciseDataAdapter(null, null);
+        exerciseDataAdapter = new ExerciseDataAdapter(null, null,null);
         exerciseDataAdapter.setData(exerciseDataList);
         binding.recycleView.setAdapter(exerciseDataAdapter);
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view12 -> NavHostFragment.findNavController(ExerciseFragment.this)
                 .navigate(R.id.action_exerciseFragment_to_SecondFragment));
@@ -68,6 +71,7 @@ public class ExerciseFragment extends Fragment {
 
                 ExerciseData exerciseData = new ExerciseData(sets, reps, weight, viewModel.getCurrentExercise().getValue().uid);
                 viewModel.insertExerciseData(exerciseData);
+                Utils.showSnackbar("Exercise data added",binding.getRoot());
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
@@ -80,6 +84,7 @@ public class ExerciseFragment extends Fragment {
             exerciseDataList = exerciseData;
             exerciseDataAdapter.setData(exerciseDataList);
         });
+
     }
 
 }

@@ -39,6 +39,8 @@ public class AddExerciseLayout extends LinearLayout {
         LinearLayout pickerLinearLayout = new LinearLayout(context);
         pickerLinearLayout.setBackgroundColor(getResources().getColor(R.color.white_background));
         pickerLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        editText.setTextColor(getResources().getColor(R.color.cardview_dark_background));
+        editText.setHintTextColor(getResources().getColor(R.color.cardview_dark_background));
 
         textInputLayout.setBoxBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         textInputLayout.setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);

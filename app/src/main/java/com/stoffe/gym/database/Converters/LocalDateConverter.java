@@ -1,4 +1,4 @@
-package com.stoffe.gym.Database.Converters;
+package com.stoffe.gym.database.Converters;
 
 import java.time.LocalDate;
 

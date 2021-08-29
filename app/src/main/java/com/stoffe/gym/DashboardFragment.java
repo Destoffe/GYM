@@ -1,14 +1,15 @@
 package com.stoffe.gym;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.stoffe.gym.Database.Workout;
-import com.stoffe.gym.Database.WorkoutViewModel;
+import com.google.android.material.snackbar.Snackbar;
+import com.stoffe.gym.Helpers.Utils;
+import com.stoffe.gym.database.entities.Workout;
+import com.stoffe.gym.database.WorkoutViewModel;
 import com.stoffe.gym.Adapters.AddExerciseLayout;
 import com.stoffe.gym.Adapters.WorkoutAdapter;
 import com.stoffe.gym.databinding.FragmentDashboardBinding;
@@ -36,7 +37,7 @@ public class DashboardFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentDashboardBinding.inflate(inflater,container,false);
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -52,7 +53,7 @@ public class DashboardFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_workout);
 
-            AddExerciseLayout LL = new AddExerciseLayout(getContext(), false,true);
+            AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
             LL.setBackgroundColor(getResources().getColor(R.color.white_background));
             LL.setEditText(getString(R.string.hint_workout_name));
             builder.setView(LL);
@@ -61,6 +62,7 @@ public class DashboardFragment extends Fragment {
                 testData.add(workout);
                 viewModel.insertWorkout(workout);
                 workoutAdapter.setData(testData);
+                Utils.showSnackbar("Workout created",binding.getRoot());
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
@@ -71,27 +73,47 @@ public class DashboardFragment extends Fragment {
             viewModel.setCurrentWorkout(workout);
             NavHostFragment.findNavController(DashboardFragment.this)
                     .navigate(R.id.action_FirstFragment_to_SecondFragment);
-        },workout -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.dialog_style);
+        }, workout -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
             builder.setTitle(R.string.delete_workout);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
                 viewModel.deleteWorkout(workout);
                 testData.remove(workout);
+                Utils.showSnackbar("Workout deleted",binding.getRoot());
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
+        }, workout -> {
+
+            for (int i = 0; i < workoutAdapter.getDataSet().size(); i++) {
+                if (workoutAdapter.getDataSet().get(i).isActive && workoutAdapter.getDataSet().get(i).getUid() != workout.getUid()){
+                    Utils.showSnackbar("Another workout is already active!",binding.getRoot());
+                    return;
+                }
+            }
+
+            workout.setActive(!workout.isActive);
+            viewModel.updateWorkout(workout);
         });
         workoutAdapter.setData(testData);
         recyclerView.setAdapter(workoutAdapter);
 
-        viewModel.getAllWorkouts().observe(getViewLifecycleOwner(),workouts -> {
-            if(workouts == null){
+        viewModel.getAllWorkouts().observe(getViewLifecycleOwner(), workouts -> {
+            if (workouts == null) {
                 binding.setIsWorkoutListEmpty(true);
                 return;
             }
             binding.setIsWorkoutListEmpty(workouts.size() < 1);
             testData = workouts;
             workoutAdapter.setData(testData);
+        });
+
+        viewModel.getAllSummaries().observe(getViewLifecycleOwner(), summaries -> {
+            if (summaries == null || summaries.size() == 0) {
+                return;
+            }
+
+            binding.setSummary(summaries.get(0));
         });
 
     }

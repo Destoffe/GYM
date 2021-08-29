@@ -2,22 +2,11 @@ package com.stoffe.gym;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.stoffe.gym.Database.AppDatabase;
-import com.stoffe.gym.Database.Workout;
-import com.stoffe.gym.Database.WorkoutDao;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
-
-import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
     }
 

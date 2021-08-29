@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.stoffe.gym.Database.Exercise;
-import com.stoffe.gym.Database.WorkoutViewModel;
+import com.stoffe.gym.Adapters.LogDataDialogLayout;
+import com.stoffe.gym.Helpers.Utils;
+import com.stoffe.gym.database.entities.Exercise;
+import com.stoffe.gym.database.WorkoutViewModel;
 import com.stoffe.gym.Adapters.AddExerciseLayout;
 import com.stoffe.gym.Adapters.ExerciseAdapter;
+import com.stoffe.gym.database.entities.ExerciseData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,7 @@ public class WorkoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         exerciseList = new ArrayList<>();
-        viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
         /*
         view.findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +67,7 @@ public class WorkoutFragment extends Fragment {
             NavHostFragment.findNavController(WorkoutFragment.this)
                     .navigate(R.id.action_SecondFragment_to_exerciseFragment);
         }, exercise -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(getString(R.string.delete_exercise) + " " + exercise.name + "?");
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
                 viewModel.deleteExercise(exercise);
@@ -72,6 +75,24 @@ public class WorkoutFragment extends Fragment {
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
+        },exercise -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            builder.setTitle(R.string.create_new_exercise_data);
+            LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
+            builder.setView(LL);
+            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
+                int sets = Integer.parseInt(LL.setsEditText.getText().toString());
+                int reps = Integer.parseInt(LL.repsEditText.getText().toString());
+                int weight = Integer.parseInt(LL.weightEditText.getText().toString());
+
+                ExerciseData exerciseData = new ExerciseData(sets, reps, weight, exercise.uid);
+                viewModel.insertExerciseData(exerciseData);
+                Utils.showSnackbar("Exercise data added",view);
+            });
+            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
+            builder.show();
+
         });
 
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
     android:layout_margin="12dp"
     android:clickable="true"
     android:focusable="true"
@@ -22,6 +23,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textAppearance="@style/textTitle"
                 android:id="@+id/set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,6 +32,7 @@
                 tools:text="Sets: 3" />
 
             <TextView
+                android:textAppearance="@style/textTitle"
                 android:id="@+id/rep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,6 +42,7 @@
                 tools:text="Reps: 12" />
 
             <TextView
+                android:textAppearance="@style/textTitle"
                 android:id="@+id/weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,10 +51,17 @@
                 android:textStyle="bold"
                 tools:text="Weight 34kg" />
 
+            <ImageView
+                android:id="@+id/handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
 
         </LinearLayout>
 
         <TextView
+            android:textAppearance="@style/textTitle"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

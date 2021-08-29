@@ -1,15 +1,19 @@
-package com.stoffe.gym.Database;
+package com.stoffe.gym.database;
 
 import android.content.Context;
 
-import com.stoffe.gym.Database.Converters.LocalDateConverter;
+import com.stoffe.gym.database.Converters.LocalDateConverter;
+import com.stoffe.gym.database.entities.Exercise;
+import com.stoffe.gym.database.entities.ExerciseData;
+import com.stoffe.gym.database.entities.Summary;
+import com.stoffe.gym.database.entities.Workout;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {Workout.class,Exercise.class,ExerciseData.class},version = 6)
+@Database(entities = {Workout.class, Exercise.class, ExerciseData.class, Summary.class},version = 9)
 @TypeConverters({LocalDateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

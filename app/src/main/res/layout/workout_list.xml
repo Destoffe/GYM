@@ -1,28 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="5dp"
-    android:layout_margin="12dp"
-    app:cardCornerRadius="5dp"
-    android:clickable="true"
-    android:focusable="true">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:padding="16dp"
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="isActive"
+            type="boolean" />
+
+        <variable
+            name="lastTime"
+            type="java.time.LocalDate" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
 
-        <TextView
-            android:id="@+id/text_view"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="workout"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:padding="16dp">
 
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:gravity="start"
+                android:text="workout"
+                android:textAppearance="@style/textTitle"
+                android:textSize="24sp" />
+
+            <TextView
+                android:textColor="@color/cardview_dark_background"
+                android:id="@+id/last_time_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/startWorkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_play" />
+
+            <ImageButton
+                android:id="@+id/stopWorkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_stop" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
