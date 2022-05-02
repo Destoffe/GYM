@@ -6,6 +6,7 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="java.time.LocalDate" />
         <variable
             name="isActive"
             type="boolean" />
@@ -22,6 +23,8 @@
         android:layout_margin="12dp"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:rippleColor="@color/cardview_dark_background"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp">
 
@@ -49,7 +52,8 @@
                 android:layout_below="@+id/text_view"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="16dp"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="@{lastTime.getYear() > 0 ? View.GONE : View.VISIBLE}"/>
 
             <ImageButton
                 android:id="@+id/startWorkout"

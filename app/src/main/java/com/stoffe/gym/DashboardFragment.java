@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -31,44 +32,9 @@ public class DashboardFragment extends Fragment {
     private WorkoutViewModel viewModel;
     private FragmentDashboardBinding binding;
 
-
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        //testData = generateDumbData();
-        viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
-        ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
-        recyclerView = view.findViewById(R.id.list_view);
-        fab.setOnClickListener(view1 -> {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
-            builder.setTitle(R.string.create_new_workout);
-
-            AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
-            LL.setBackgroundColor(getResources().getColor(R.color.white_background));
-            LL.setEditText(getString(R.string.hint_workout_name));
-            builder.setView(LL);
-            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                Workout workout = new Workout(LL.editText.getText().toString());
-                testData.add(workout);
-                viewModel.insertWorkout(workout);
-                workoutAdapter.setData(testData);
-                Utils.showSnackbar("Workout created",binding.getRoot());
-            });
-            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
-            builder.show();
-        });
-
-        testData = new ArrayList<>();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         workoutAdapter = new WorkoutAdapter(workout -> {
             viewModel.setCurrentWorkout(workout);
             NavHostFragment.findNavController(DashboardFragment.this)
@@ -95,6 +61,51 @@ public class DashboardFragment extends Fragment {
             workout.setActive(!workout.isActive);
             viewModel.updateWorkout(workout);
         });
+    }
+
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+
+        return binding.getRoot();
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //testData = generateDumbData();
+        viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
+        ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
+        recyclerView = view.findViewById(R.id.list_view);
+        fab.setOnClickListener(view1 -> {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            builder.setTitle(R.string.create_new_workout);
+
+            AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
+            LL.setBackgroundColor(getResources().getColor(R.color.white_background));
+            LL.setEditText(getString(R.string.hint_workout_name));
+            builder.setView(LL);
+            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
+                if(!LL.editText.getText().toString().isEmpty()) {
+                    Workout workout = new Workout(LL.editText.getText().toString());
+                    testData.add(workout);
+                    viewModel.insertWorkout(workout);
+                    workoutAdapter.setData(testData);
+                    Utils.showSnackbar("Workout created", binding.getRoot());
+                }else{
+                    Utils.showSnackbar("Name cannot be empty", binding.getRoot());
+                }
+            });
+            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
+
+        testData = new ArrayList<>();
+
         workoutAdapter.setData(testData);
         recyclerView.setAdapter(workoutAdapter);
 

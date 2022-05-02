@@ -14,7 +14,7 @@
         app:hintTextColor="@color/cardview_dark_background"
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
-        android:hint="sets">
+        android:hint="@string/exercise_sets_ammount_dialog">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sets_edit_text"
@@ -34,7 +34,7 @@
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
         android:layout_marginBottom="8dp"
-        android:hint="reps">
+        android:hint="@string/exercise_reps_ammount_dialog">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/reps_edit_text"
@@ -54,7 +54,7 @@
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
         android:layout_marginBottom="8dp"
-        android:hint="weight">
+        android:hint="@string/exercise_weight_ammount_dialog">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/weight_edit_text"

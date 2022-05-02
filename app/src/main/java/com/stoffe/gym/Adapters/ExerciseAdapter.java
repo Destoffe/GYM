@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.stoffe.gym.database.entities.Exercise;
 import com.stoffe.gym.R;
-import com.stoffe.gym.database.entities.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +27,27 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         void onLongItemClick(Exercise exercise);
     }
 
-    public interface OnButtonClickListener {
+    public interface OnShortcutButtonClickListener {
+        void onItemClick(Exercise exercise);
+    }
+
+    public interface OnGraphButtonClickListener {
         void onItemClick(Exercise exercise);
     }
 
     private final OnItemClickListener listener;
     private final OnItemLongClickListener longClickListener;
-    private final OnButtonClickListener buttonClickListener;
+    private final OnShortcutButtonClickListener shortcutButtonClickListener;
+    private final OnGraphButtonClickListener graphButtonClickListener;
 
 
-    public ExerciseAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener, OnButtonClickListener buttonClickListener){
+    public ExerciseAdapter(OnItemClickListener listener, OnItemLongClickListener longClickListener, OnShortcutButtonClickListener shortcutButtonClickListener,
+                           OnGraphButtonClickListener graphButtonClickListener){
         this.dataSet = new ArrayList<>();
         this.listener = listener;
         this.longClickListener = longClickListener;
-        this.buttonClickListener = buttonClickListener;
+        this.shortcutButtonClickListener = shortcutButtonClickListener;
+        this.graphButtonClickListener = graphButtonClickListener;
     }
 
     @NonNull
@@ -55,7 +61,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(dataSet.get(position),listener,longClickListener,buttonClickListener);
+        holder.bind(dataSet.get(position),listener,longClickListener, shortcutButtonClickListener,graphButtonClickListener);
 
     }
 
@@ -67,26 +73,35 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView nameTextView;
         private final ImageButton shortcutBtn;
+        private final ImageButton graphBut;
 
         public ViewHolder(View view) {
             super(view);
             nameTextView = (TextView) view.findViewById(R.id.name);
             shortcutBtn = view.findViewById(R.id.addDataShortcut);
+            graphBut = view.findViewById(R.id.seeGraphButton);
         }
 
 
-        public void bind(final Exercise exercise, final OnItemClickListener listener,final OnItemLongClickListener longClickListener,final OnButtonClickListener buttonClickListener) {
+        public void bind(final Exercise exercise, final OnItemClickListener listener,final OnItemLongClickListener longClickListener,final OnShortcutButtonClickListener shortcutButtonClickListener,
+                         final OnGraphButtonClickListener graphButtonClickListener) {
             nameTextView.setText(exercise.name);
             itemView.setOnClickListener(view ->
                     listener.onItemClick(exercise)
             );
 
-            shortcutBtn.setOnClickListener(view -> buttonClickListener.onItemClick(exercise));
+            shortcutBtn.setOnClickListener(view -> shortcutButtonClickListener.onItemClick(exercise));
+
+            graphBut.setOnClickListener(view -> {
+                graphButtonClickListener.onItemClick(exercise);
+            });
 
             itemView.setOnLongClickListener(view -> {
                 longClickListener.onLongItemClick(exercise);
                 return false;
             });}
+
+
 
 
     }

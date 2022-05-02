@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GYM</string>
+    <string name="app_name">Gym Bro</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -42,4 +42,11 @@
     <string name="exercise_reps_ammount">Reps: %d</string>
     <string name="exercise_sets_ammount">Sets: %d</string>
     <string name="exercise_weight_ammount">Weight: %d</string>
+
+    <string name="exercise_reps_ammount_dialog">Reps:</string>
+    <string name="exercise_sets_ammount_dialog">Sets:</string>
+    <string name="exercise_weight_ammount_dialog">Weight:</string>
+
+    <string name="exercise_data_added">Exercise data added</string>
+    <string name="exercise_data_missing">Exercise data missing, try again</string>
 </resources>

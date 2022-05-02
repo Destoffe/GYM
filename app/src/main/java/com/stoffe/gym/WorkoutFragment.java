@@ -75,24 +75,33 @@ public class WorkoutFragment extends Fragment {
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
-        },exercise -> {
+        }, exercise -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_exercise_data);
             LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
+                if (LL.setsEditText.getText().toString().equals("") || LL.repsEditText.getText().toString().equals("") || LL.weightEditText.getText().toString().equals("")) {
+                    Utils.showSnackbar(getString(R.string.exercise_data_missing), getView());
+                    return;
+                }
+
                 int sets = Integer.parseInt(LL.setsEditText.getText().toString());
                 int reps = Integer.parseInt(LL.repsEditText.getText().toString());
                 int weight = Integer.parseInt(LL.weightEditText.getText().toString());
 
                 ExerciseData exerciseData = new ExerciseData(sets, reps, weight, exercise.uid);
                 viewModel.insertExerciseData(exerciseData);
-                Utils.showSnackbar("Exercise data added",view);
+                Utils.showSnackbar("Exercise data added", view);
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
 
+        }, exercise -> {
+            viewModel.setCurrentExercise(exercise);
+            NavHostFragment.findNavController(WorkoutFragment.this)
+                    .navigate(R.id.action_SecondFragment_to_graphFragment);
         });
 
 
@@ -128,11 +137,16 @@ public class WorkoutFragment extends Fragment {
             LL.setEditText(getString(R.string.hint_exercise_name));
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                Exercise exercise = new Exercise(LL.editText.getText().toString(), viewModel.getCurrentWorkout().getValue().uid);
-                viewModel.insertExercise(exercise);
+                if (!LL.editText.getText().toString().isEmpty()) {
+                    Exercise exercise = new Exercise(LL.editText.getText().toString(), viewModel.getCurrentWorkout().getValue().uid);
+                    viewModel.insertExercise(exercise);
+                } else {
+                    Utils.showSnackbar("Name cant be empty", view);
+                }
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
         });
+
     }
 }

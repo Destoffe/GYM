@@ -45,7 +45,6 @@ public class Workout {
     }
 
     public Workout() {
-
     }
 
     public LocalDate lastTime;
@@ -53,7 +52,12 @@ public class Workout {
     public boolean isActive;
 
     public LocalDate getLastTime() {
-        return lastTime;
+        if(lastTime  == null){
+            return LocalDate.MIN;
+        }else{
+            return lastTime;
+        }
+
     }
 
     public void setLastTime(LocalDate lastTime) {

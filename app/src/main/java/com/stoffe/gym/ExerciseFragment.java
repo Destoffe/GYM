@@ -43,7 +43,16 @@ public class ExerciseFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
         exerciseDataList = new ArrayList<>();
-        exerciseDataAdapter = new ExerciseDataAdapter(null, null,null);
+        exerciseDataAdapter = new ExerciseDataAdapter(null, exercise -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
+            builder.setTitle(getString(R.string.delete_exercise_log));
+            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
+                viewModel.deleteExerciseData(exercise);
+                exerciseDataList.remove(exercise);
+            });
+            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
+            builder.show();
+        },null);
         exerciseDataAdapter.setData(exerciseDataList);
         binding.recycleView.setAdapter(exerciseDataAdapter);
 
@@ -65,13 +74,17 @@ public class ExerciseFragment extends Fragment{
             LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
+                if(LL.setsEditText.getText().toString().equals("") || LL.repsEditText.getText().toString().equals("") || LL.weightEditText.getText().toString().equals("")){
+                    Utils.showSnackbar(getString(R.string.exercise_data_missing),binding.getRoot());
+                    return;
+                }
                 int sets = Integer.parseInt(LL.setsEditText.getText().toString());
                 int reps = Integer.parseInt(LL.repsEditText.getText().toString());
                 int weight = Integer.parseInt(LL.weightEditText.getText().toString());
 
                 ExerciseData exerciseData = new ExerciseData(sets, reps, weight, viewModel.getCurrentExercise().getValue().uid);
                 viewModel.insertExerciseData(exerciseData);
-                Utils.showSnackbar("Exercise data added",binding.getRoot());
+                Utils.showSnackbar(getString(R.string.exercise_data_added),binding.getRoot());
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();

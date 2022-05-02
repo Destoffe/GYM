@@ -11,6 +11,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.stoffe.gym.database.entities.Workout;
 import com.stoffe.gym.R;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -105,9 +106,15 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
             if(workout.getLastTime() == null){
                 lastTimeTextView.setVisibility(View.GONE);
             }else{
-                lastTimeTextView.setVisibility(View.VISIBLE);
-                lastTimeTextView.setText(workout.getLastTime().toString());
+                if(workout.getLastTime().getYear() < 0){
+                    lastTimeTextView.setVisibility(View.GONE);
+                }else {
+                    lastTimeTextView.setVisibility(View.VISIBLE);
+                    lastTimeTextView.setText(workout.getLastTime().toString());
+                }
             }
+
+
         }
 
     }

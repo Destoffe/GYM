@@ -97,14 +97,8 @@ public class ExerciseDataAdapter extends RecyclerView.Adapter<ExerciseDataAdapte
             repsTextView.setText(context.getString(R.string.exercise_reps_ammount, exercise.reps));
             weightTextView.setText(context.getString(R.string.exercise_weight_ammount, exercise.weight));
             dateTextView.setText(exercise.date.toString());
-            itemView.setOnClickListener(view -> {
-                        return;
-                        //listener.onItemClick(exercise);
-                    }
-            );
-
             itemView.setOnLongClickListener(view -> {
-                //longClickListener.onLongItemClick(exercise);
+                longClickListener.onLongItemClick(exercise);
                 return false;
             });
         }

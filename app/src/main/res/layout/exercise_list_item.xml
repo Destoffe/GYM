@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardElevation="5dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:rippleColor="@color/cardview_dark_background"
     android:layout_margin="12dp"
     app:cardCornerRadius="5dp"
     android:clickable="true"
@@ -23,7 +25,17 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exercise name" />
+        tools:text="Exercise name" />
+
+        <ImageButton
+            android:id="@+id/seeGraphButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toStartOf="@id/addDataShortcut"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_baseline_show_chart_24" />
 
         <ImageButton
             android:id="@+id/addDataShortcut"
