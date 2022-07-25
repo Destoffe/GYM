@@ -15,8 +15,9 @@ android {
         applicationId "com.stoffe.gym"
         minSdkVersion 26
         targetSdkVersion 30
-        versionCode 5
-        versionName "1.1"
+        compileSdkVersion 31
+        versionCode 6
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
