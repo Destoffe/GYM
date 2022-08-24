@@ -1,6 +1,7 @@
 package com.stoffe.gym;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,12 +78,12 @@ public class WorkoutFragment extends Fragment {
             builder.show();
         }, exercise -> {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_exercise_data);
             LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if (LL.setsEditText.getText().toString().equals("") || LL.repsEditText.getText().toString().equals("") || LL.weightEditText.getText().toString().equals("")) {
+                if (TextUtils.isEmpty(LL.setsEditText.getText())|| TextUtils.isEmpty(LL.repsEditText.getText()) ||TextUtils.isEmpty(LL.weightEditText.getText())) {
                     Utils.showSnackbar(getString(R.string.exercise_data_missing), getView());
                     return;
                 }
@@ -93,7 +94,7 @@ public class WorkoutFragment extends Fragment {
 
                 ExerciseData exerciseData = new ExerciseData(sets, reps, weight, exercise.uid);
                 viewModel.insertExerciseData(exerciseData);
-                Utils.showSnackbar("Exercise data added", view);
+                Utils.showSnackbar(getString(R.string.exercise_data_added), view);
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
@@ -130,18 +131,18 @@ public class WorkoutFragment extends Fragment {
 
         ExtendedFloatingActionButton button = view.findViewById(R.id.fab_exercise);
         button.setOnClickListener(view1 -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_exercise);
             AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
             LL.setBackgroundColor(getResources().getColor(R.color.white_background));
             LL.setEditText(getString(R.string.hint_exercise_name));
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if (!LL.editText.getText().toString().isEmpty()) {
+                if (!TextUtils.isEmpty(LL.editText.getText())) {
                     Exercise exercise = new Exercise(LL.editText.getText().toString(), viewModel.getCurrentWorkout().getValue().uid);
                     viewModel.insertExercise(exercise);
                 } else {
-                    Utils.showSnackbar("Name cant be empty", view);
+                    Utils.showSnackbar(getString(R.string.dialog_workout_created_error), view);
                 }
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());

@@ -1,6 +1,7 @@
 package com.stoffe.gym;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,12 +70,12 @@ public class ExerciseFragment extends Fragment{
         });
 
         binding.fabExercise.setOnClickListener(view1 -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_exercise_data);
             LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if(LL.setsEditText.getText().toString().equals("") || LL.repsEditText.getText().toString().equals("") || LL.weightEditText.getText().toString().equals("")){
+                if(TextUtils.isEmpty(LL.setsEditText.getText()) || TextUtils.isEmpty(LL.repsEditText.getText()) || TextUtils.isEmpty(LL.weightEditText.getText())){
                     Utils.showSnackbar(getString(R.string.exercise_data_missing),binding.getRoot());
                     return;
                 }

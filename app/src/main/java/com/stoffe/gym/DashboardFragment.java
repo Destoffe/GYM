@@ -1,6 +1,7 @@
 package com.stoffe.gym;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,12 +78,12 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //testData = generateDumbData();
-        viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
         recyclerView = view.findViewById(R.id.list_view);
         fab.setOnClickListener(view1 -> {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.dialog_style);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_workout);
 
             AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
@@ -90,14 +91,14 @@ public class DashboardFragment extends Fragment {
             LL.setEditText(getString(R.string.hint_workout_name));
             builder.setView(LL);
             builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if(!LL.editText.getText().toString().isEmpty()) {
+                if(!TextUtils.isEmpty(LL.editText.getText())) {
                     Workout workout = new Workout(LL.editText.getText().toString());
                     testData.add(workout);
                     viewModel.insertWorkout(workout);
                     workoutAdapter.setData(testData);
-                    Utils.showSnackbar("Workout created", binding.getRoot());
+                    Utils.showSnackbar(getString(R.string.dialog_workout_created), binding.getRoot());
                 }else{
-                    Utils.showSnackbar("Name cannot be empty", binding.getRoot());
+                    Utils.showSnackbar(getString(R.string.dialog_workout_created_error), binding.getRoot());
                 }
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());

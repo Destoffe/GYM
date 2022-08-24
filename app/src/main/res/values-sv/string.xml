@@ -46,5 +46,14 @@
     <string name="exercise_data_added">Träningsdata tillagd</string>
     <string name="exercise_data_missing">Träningsdata saknas försök igen</string>
 
+    <string name="dialog_workout_created">"Träning skapad</string>
+    <string name="dialog_workout_created_error">"Namnet kan inte vara tomt</string>
+
+    <string name="weight">Vikt</string>
+    <string name="sets">Sets</string>
+    <string name="reps">Reps</string>
+
+    <string name="graph_label">Tränings Data</string>
+
 
 </resources>

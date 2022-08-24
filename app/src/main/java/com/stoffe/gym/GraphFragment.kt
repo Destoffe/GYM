@@ -53,7 +53,7 @@ class GraphFragment : Fragment() {
         linechart.axisLeft.setDrawGridLines(false)
         linechart.xAxis.setDrawGridLines(false)
         linechart.axisRight.setDrawGridLines(false)
-        linechart.description.text = "Exercise Data"
+        linechart.description.text = getString(R.string.graph_label)
 
         workoutViewModel.currentExercise.value?.let {
             workoutViewModel.getAllExercisesDataWithId(it.uid).observe(
@@ -70,9 +70,9 @@ class GraphFragment : Fragment() {
                             setsEntries.add(Entry(index.toFloat(), data.sets.toFloat()))
                         }
                     }
-                    val weightDataSet = LineDataSet(weightEntries, "Weight")
-                    val repsDataSet = LineDataSet(repsEntries, "Reps")
-                    val setsDataSet = LineDataSet(setsEntries, "Sets")
+                    val weightDataSet = LineDataSet(weightEntries, getString(R.string.weight))
+                    val repsDataSet = LineDataSet(repsEntries, getString(R.string.reps))
+                    val setsDataSet = LineDataSet(setsEntries, getString(R.string.sets))
                     weightDataSet.lineWidth = 4f
                     weightDataSet.valueTextSize = 12f
                     repsDataSet.lineWidth = 4f
