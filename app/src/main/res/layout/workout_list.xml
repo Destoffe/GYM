@@ -3,14 +3,13 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <data>
         <import type="android.view.View" />
         <import type="java.time.LocalDate" />
+
         <variable
             name="isActive"
             type="boolean" />
-
         <variable
             name="lastTime"
             type="java.time.LocalDate" />
@@ -72,8 +71,6 @@
                 android:layout_centerVertical="true"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/ic_stop" />
-
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
-
 </layout>
