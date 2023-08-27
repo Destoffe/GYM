@@ -10,6 +10,8 @@
     <string name="previous">Föregående</string>
 
     <string name="add_workout">Skapa träningspass</string>
+    <string name="fab_add_bmi">Lägg till kropps info</string>
+    <string name="fab">Lägg till data</string>
     <string name="add_exercise">Skapa övning</string>
     <string name="create_new_workout">Skapa ett nytt träningspass</string>
     <string name="hint_workout_name">Namn på träningspass</string>

@@ -3,9 +3,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -26,9 +28,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.github.mikephil.charting.charts.LineChart
+            android:layout_marginTop="64dp"
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="0.5"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -8,6 +8,8 @@
     <string name="previous">Previous</string>
 
     <string name="add_workout">Create workout</string>
+    <string name="fab_add_bmi">Add body info</string>
+    <string name="fab">Add data</string>
     <string name="add_exercise">Add exercise</string>
 
     <string name="create_new_workout">Create a new workout</string>

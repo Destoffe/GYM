@@ -62,6 +62,7 @@ public class DashboardFragment extends Fragment {
             workout.setActive(!workout.isActive);
             viewModel.updateWorkout(workout);
         });
+
     }
 
     @Override
@@ -79,9 +80,14 @@ public class DashboardFragment extends Fragment {
 
         //testData = generateDumbData();
         viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
+        ExtendedFloatingActionButton fab_workout = view.findViewById(R.id.fab_workout);
+        ExtendedFloatingActionButton fab_bmi = view.findViewById(R.id.fab_bmi);
         ExtendedFloatingActionButton fab = view.findViewById(R.id.fab);
+        fab_bmi.hide();
+        fab_workout.hide();
         recyclerView = view.findViewById(R.id.list_view);
-        fab.setOnClickListener(view1 -> {
+
+        fab_workout.setOnClickListener(view1 -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
             builder.setTitle(R.string.create_new_workout);
@@ -103,8 +109,17 @@ public class DashboardFragment extends Fragment {
             });
             builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
             builder.show();
+            fab_bmi.show();
         });
-
+        fab.setOnClickListener(view1 -> {
+            if(!fab_bmi.isShown() && !fab_workout.isShown()){
+                fab_bmi.show();
+                fab_workout.show();
+            }else {
+                fab_bmi.hide();
+                fab_workout.hide();
+            }
+        });
         testData = new ArrayList<>();
 
         workoutAdapter.setData(testData);
