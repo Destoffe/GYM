@@ -10,10 +10,10 @@ public class Exercise {
     @PrimaryKey(autoGenerate = true)
     public int uid;
 
-    public int workoutID;
+    public final int workoutID;
 
     @ColumnInfo(name = "name")
-    public String name;
+    public final String name;
 
 
     public Exercise(String name,int workoutID) {

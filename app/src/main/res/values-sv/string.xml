@@ -57,5 +57,15 @@
 
     <string name="graph_label">Tränings Data</string>
 
+    <string name="add_body_data">Lägg till kroppsdata</string>
+    <string name="bmi_data_missing">Kroppsdata saknas, försök igen</string>
+    <string name="bmi_data_added">Kroppsdata tillagd</string>
+    <string name="bmi_graphh_label">Kroppsdata</string>
+    <string name="bmi_title">BMI</string>
+    <string name="weight_bmi">Vikt:  %1$.1f</string>
+    <string name="height_bmi">Längd: %1$.1f</string>
+    <string name="bmi_bmi">BMI: %1$.1f</string>
+    <string name="date_bmi">Datum: %1$s</string>
+
 
 </resources>

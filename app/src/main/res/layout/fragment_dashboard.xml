@@ -13,20 +13,22 @@
         <variable
             name="summary"
             type="com.stoffe.gym.database.entities.Summary" />
+        <variable
+            name="bmi"
+            type="com.stoffe.gym.database.entities.BMI" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_background"
-        tools:context=".DashboardFragment">
+        tools:context=".dashboard.DashboardFragment">
 
         <LinearLayout
             android:id="@+id/summaryLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="@{summary == null ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toTopOf="parent">
 
             <Space
@@ -34,10 +36,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
-            <include layout="@layout/summary_card">
+            <include
+                layout="@layout/summary_card"
+                android:visibility="@{summary == null ? View.GONE : View.VISIBLE}"/>
 
-            </include>
-
+            <include
+                android:id="@+id/bmi_card"
+                layout="@layout/list_bmi"
+                android:visibility="@{bmi == null ? View.GONE : View.VISIBLE}" />
         </LinearLayout>
 
         <TextView

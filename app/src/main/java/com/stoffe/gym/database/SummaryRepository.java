@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData;
 
 public class SummaryRepository {
 
-    WorkoutDao workoutDao;
+    final WorkoutDao workoutDao;
 
     SummaryRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -35,7 +35,7 @@ public class SummaryRepository {
     }
 
     private static class insertSummaryAsyncTask extends AsyncTask<Summary,Void,Void> {
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         insertSummaryAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;
@@ -49,7 +49,7 @@ public class SummaryRepository {
     }
 
     private static class deleteSummaryAsyncTask extends AsyncTask<Summary,Void,Void>{
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         deleteSummaryAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;
@@ -63,7 +63,7 @@ public class SummaryRepository {
     }
 
     private static class updateSummaryAsyncTask extends AsyncTask<Summary,Void,Void>{
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         updateSummaryAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;

@@ -15,10 +15,10 @@ public class AddExerciseLayout extends LinearLayout {
     final NumberPicker startTimePicker;
     final NumberPicker incrementPicker;
     public final TextInputEditText editText;
-    private TextInputLayout textInputLayout;
+    private final TextInputLayout textInputLayout;
 
-    private boolean picker;
-    private boolean showEditText;
+    private final boolean picker;
+    private final boolean showEditText;
 
     public AddExerciseLayout(Context context,boolean picker,boolean showEditText) {
         super(context);
@@ -84,11 +84,4 @@ public class AddExerciseLayout extends LinearLayout {
         editText.setHint(string);
     }
 
-    public int getStartTimePickerValue() {
-        return startTimePicker.getValue();
-    }
-
-    public int getIncrementPickerValue() {
-        return incrementPicker.getValue();
-    }
 }

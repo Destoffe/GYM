@@ -15,10 +15,10 @@ import androidx.lifecycle.MutableLiveData;
 
 public class WorkoutViewModel extends AndroidViewModel {
 
-    WorkoutRepository workoutRepository;
-    ExerciseRepository exerciseRepository;
-    SummaryRepository summaryRepository;
-    LiveData<List<Workout>> workoutList;
+    final WorkoutRepository workoutRepository;
+    final ExerciseRepository exerciseRepository;
+    final SummaryRepository summaryRepository;
+    final LiveData<List<Workout>> workoutList;
     private final MutableLiveData<Workout> currentWorkout;
     private final MutableLiveData<Exercise> currentExercise;
 

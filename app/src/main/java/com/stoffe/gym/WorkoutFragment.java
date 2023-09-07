@@ -53,16 +53,7 @@ public class WorkoutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         exerciseList = new ArrayList<>();
         viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
-        /*
-        view.findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });
 
-         */
         exerciseAdapter = new ExerciseAdapter(exercise -> {
             viewModel.setCurrentExercise(exercise);
             NavHostFragment.findNavController(WorkoutFragment.this)

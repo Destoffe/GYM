@@ -42,7 +42,7 @@ public class ExerciseFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel = new ViewModelProvider(getActivity()).get(WorkoutViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
         exerciseDataList = new ArrayList<>();
         exerciseDataAdapter = new ExerciseDataAdapter(null, exercise -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);

@@ -14,7 +14,7 @@
         app:hintTextColor="@color/cardview_dark_background"
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
-        android:hint="@string/exercise_sets_ammount_dialog">
+        android:hint="Age">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/age_edit_text"
@@ -26,6 +26,25 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:checkedButton="@+id/radio_button_1"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/radio_button_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Male"/>
+        <RadioButton
+            android:id="@+id/radio_button_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Female"/>
+    </RadioGroup>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +53,7 @@
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
         android:layout_marginBottom="8dp"
-        android:hint="@string/exercise_reps_ammount_dialog">
+        android:hint="Height">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/height_edit_text"
@@ -42,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/cardview_dark_background"
             android:textColorHint="@color/cardview_dark_background"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,7 +73,7 @@
         android:textColorHint="@color/cardview_dark_background"
         app:boxBackgroundColor="@color/white"
         android:layout_marginBottom="8dp"
-        android:hint="@string/exercise_weight_ammount_dialog">
+        android:hint="Weight">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/weight_edit_text"
@@ -62,7 +81,7 @@
             android:textColor="@color/cardview_dark_background"
             android:textColorHint="@color/cardview_dark_background"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData;
 
 public class WorkoutRepository {
 
-    WorkoutDao workoutDao;
+    final WorkoutDao workoutDao;
 
     WorkoutRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -35,7 +35,7 @@ public class WorkoutRepository {
     }
 
     private static class insertWorkoutAsyncTask extends AsyncTask<Workout,Void,Void>{
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         insertWorkoutAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;
@@ -49,7 +49,7 @@ public class WorkoutRepository {
     }
 
     private static class deleteWorkoutAsyncTask extends AsyncTask<Workout,Void,Void>{
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         deleteWorkoutAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;
@@ -63,7 +63,7 @@ public class WorkoutRepository {
     }
 
     private static class updateWorkoutAsyncTask extends AsyncTask<Workout,Void,Void>{
-        private WorkoutDao taskDao;
+        private final WorkoutDao taskDao;
 
         updateWorkoutAsyncTask(WorkoutDao workoutDao){
             taskDao = workoutDao;

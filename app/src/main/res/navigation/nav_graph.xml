@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.stoffe.gym.DashboardFragment"
+        android:name="com.stoffe.gym.dashboard.DashboardFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_dashboard">
 
@@ -18,6 +18,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_FirstFragment_to_bmiFragment"
+            app:destination="@id/bmiFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -70,4 +73,8 @@
             android:id="@+id/action_graphFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/bmiFragment"
+        android:name="com.stoffe.gym.BmiFragment"
+        android:label="BmiFragment" />
 </navigation>

@@ -1,5 +1,6 @@
 package com.stoffe.gym.database;
 
+import com.stoffe.gym.database.entities.BMI;
 import com.stoffe.gym.database.entities.Exercise;
 import com.stoffe.gym.database.entities.ExerciseData;
 import com.stoffe.gym.database.entities.Summary;
@@ -71,4 +72,14 @@ public interface WorkoutDao {
 
     @Query("SELECT * FROM summary")
     LiveData<List<Summary>> getAllSummary();
+
+    @Insert
+    void insertBMI(BMI... bmi);
+
+    @Query("SELECT * FROM BMI")
+    LiveData<List<BMI>> getAllBMI();
+
+    @Update()
+    void updateBMI(BMI bmi);
+
 }

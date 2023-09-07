@@ -57,4 +57,14 @@
     <string name="reps">Reps</string>
 
     <string name="graph_label">Exercise Data</string>
+
+    <string name="add_body_data">Add body data</string>
+    <string name="bmi_data_missing">Body data missing, try again</string>
+    <string name="bmi_data_added">Body data added</string>
+    <string name="bmi_graphh_label">Body Data</string>
+    <string name="bmi_title">BMI</string>
+    <string name="weight_bmi">Weight: %1$.1f</string>
+    <string name="height_bmi">Height: %1$.1f</string>
+    <string name="bmi_bmi">BMI: %1$.1f</string>
+    <string name="date_bmi">Date: %1$s</string>
 </resources>

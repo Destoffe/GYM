@@ -12,4 +12,5 @@ data class BMI(
     val height: Float,
     val gender: Int,
     val date: LocalDateTime,
+    val age: Int,
 )
