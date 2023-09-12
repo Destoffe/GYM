@@ -1,106 +1,126 @@
-package com.stoffe.gym.database;
+package com.stoffe.gym.database
 
-import android.app.Application;
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.stoffe.gym.database.entities.Exercise
+import com.stoffe.gym.database.entities.ExerciseData
+import com.stoffe.gym.database.entities.Summary
+import com.stoffe.gym.database.entities.Workout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-import com.stoffe.gym.database.entities.Exercise;
-import com.stoffe.gym.database.entities.ExerciseData;
-import com.stoffe.gym.database.entities.Summary;
-import com.stoffe.gym.database.entities.Workout;
+class WorkoutViewModel(application: Application) : AndroidViewModel(
+    application
+) {
 
-import java.util.List;
+    private val workoutRepository = WorkoutRepository(getDatabase(application))
+    private val exerciseRepository = ExerciseRepository(getDatabase(application))
+   // val summaryRepository: SummaryRepository
+    val allWorkouts = workoutRepository.workouts
+    private val currentWorkout: MutableLiveData<Workout>
+    val currentExercise: MutableLiveData<Exercise>
 
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+    val allExercisesWithId = MutableStateFlow<List<Exercise>?>(null)
+    val allExercisesDataWithId = MutableStateFlow<List<ExerciseData>?>(null)
 
-public class WorkoutViewModel extends AndroidViewModel {
+    private val exerciseId: MutableStateFlow<Int?> = MutableStateFlow(null)
 
-    final WorkoutRepository workoutRepository;
-    final ExerciseRepository exerciseRepository;
-    final SummaryRepository summaryRepository;
-    final LiveData<List<Workout>> workoutList;
-    private final MutableLiveData<Workout> currentWorkout;
-    private final MutableLiveData<Exercise> currentExercise;
+    val allExercises = exerciseRepository.exercises
 
-    public WorkoutViewModel(Application application){
-        super(application);
-        workoutRepository = new WorkoutRepository(application);
-        exerciseRepository = new ExerciseRepository(application);
-        summaryRepository = new SummaryRepository(application);
-        workoutList = workoutRepository.getWorkout();
-        currentWorkout = new MutableLiveData<>();
-        currentExercise = new MutableLiveData<>();
+    init {
+       // summaryRepository = SummaryRepository(application)
+        currentWorkout = MutableLiveData()
+        currentExercise = MutableLiveData()
     }
 
-    public LiveData<List<Workout>> getAllWorkouts(){
-        return workoutList;
+    fun setExerciseID(id: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val exercises = exerciseRepository.getExerciseWithID(id)
+                allExercisesWithId.value = exercises
+            }
+        }
     }
 
-    public void insertWorkout(Workout workout){
-        workoutRepository.insert(workout);
+    fun setExerciseDataID(id: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val exercises = exerciseRepository.getExerciseDataWithID(id)
+                allExercisesDataWithId.value = exercises
+            }
+        }
     }
 
-    public void updateWorkout(Workout workout){
-        workoutRepository.update(workout);
+    fun insertWorkout(workout: Workout) {
+        viewModelScope.launch {
+            workoutRepository.insert(workout)
+        }
+
     }
 
-    public void setCurrentWorkout(Workout workout){
-        currentWorkout.setValue(workout);
+    fun updateWorkout(workout: Workout) {
+        viewModelScope.launch {
+            workoutRepository.update(workout)
+        }
     }
 
-    public LiveData<Workout> getCurrentWorkout(){
-        return currentWorkout;
+    fun setCurrentWorkout(workout: Workout) {
+        currentWorkout.value = workout
     }
 
-    public void setCurrentExercise(Exercise exercise){
-        currentExercise.setValue(exercise);
+    fun getCurrentWorkout(): LiveData<Workout> {
+        return currentWorkout
     }
 
-    public LiveData<Exercise> getCurrentExercise(){
-        return currentExercise;
+    fun setCurrentExercise(exercise: Exercise) {
+        currentExercise.value = exercise
     }
 
-    public void deleteWorkout(Workout workout){
-        workoutRepository.delete(workout);
+    fun getCurrentExercise(): LiveData<Exercise> {
+        return currentExercise
     }
 
-    public LiveData<List<Exercise>> getAllExercises(){
-        return exerciseRepository.getExercise();
+    fun deleteWorkout(workout: Workout) {
+        viewModelScope.launch {
+            workoutRepository.delete(workout)
+        }
     }
 
-    public LiveData<List<Exercise>> getAllExercisesWithId(int id){
-        return exerciseRepository.getExerciseWithID(id);
+    fun insertExercise(exercise: Exercise) {
+        viewModelScope.launch {
+            exerciseRepository.insertExercise(exercise)
+        }
     }
 
-    public void insertExercise(Exercise exercise){
-        exerciseRepository.insertExercise(exercise);
+    fun deleteExercise(exercise: Exercise) {
+        viewModelScope.launch {
+            exerciseRepository.deleteExercise(exercise)
+        }
     }
 
-    public void deleteExercise(Exercise exercise){
-        exerciseRepository.deleteExercise(exercise);
+    fun insertExerciseData(exerciseData: ExerciseData) {
+        viewModelScope.launch {
+            exerciseRepository.insertExerciseData(exerciseData)
+        }
     }
 
-    public LiveData<List<ExerciseData>> getAllExercisesDataWithId(int id){
-        return exerciseRepository.getExerciseDataWithID(id);
+    fun deleteExerciseData(exerciseData: ExerciseData) {
+        viewModelScope.launch {
+            exerciseRepository.deleteExerciseData(exerciseData)
+        }
     }
 
-    public void insertExerciseData(ExerciseData exerciseData){
-        exerciseRepository.insertExerciseData(exerciseData);
-    }
+    /*
+    val allSummaries: LiveData<List<Summary>>
+        get() = summaryRepository.summary
 
-    public void deleteExerciseData(ExerciseData exerciseData){
-        exerciseRepository.deleteExerciseData(exerciseData);
-    }
+     */
 
-    public LiveData<List<Summary>> getAllSummaries(){
-        return summaryRepository.getSummary();
-    }
-
-    public void insertSummary(Summary summary){
-        summaryRepository.insert(summary);
-    }
-
-    public void deleteSummary(Summary summary){
-        summaryRepository.delete(summary);
-    }
 }

@@ -3,20 +3,22 @@ package com.stoffe.gym.database
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.stoffe.gym.dashboard.BMIRepository
 import com.stoffe.gym.database.entities.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
-class DashboardViewModel(application: Application?) : AndroidViewModel(
-    application!!
+class DashboardViewModel(application: Application) : AndroidViewModel(
+    application
 ) {
-    var bmiRepository =  BMIRepository(application)
+    private val bmiRepository = BMIRepository(getDatabase(application))
 
     fun insertBmi(bmi: BMI) {
-        bmiRepository.insert(bmi)
+        viewModelScope.launch{
+            bmiRepository.insert(bmi)
+        }
     }
 
-    val allBMI: LiveData<List<BMI>>
-        get() = bmiRepository.bmi
-
+    val allBMI = bmiRepository.bmi
 }

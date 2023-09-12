@@ -8,12 +8,11 @@ import com.stoffe.gym.dashboard.BMIRepository
 import com.stoffe.gym.database.entities.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class BmiViewModel(application: Application?) : AndroidViewModel(
-    application!!
+class BmiViewModel(application: Application) : AndroidViewModel(
+    application
 ) {
-    var bmiRepository =  BMIRepository(application)
+    private val bmiRepository = BMIRepository(getDatabase(application))
 
-    val allBMI: LiveData<List<BMI>>
-        get() = bmiRepository.bmi
+    val allBMI = bmiRepository.bmi
 
 }

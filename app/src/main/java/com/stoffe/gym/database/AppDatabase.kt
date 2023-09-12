@@ -23,25 +23,40 @@ import com.stoffe.gym.database.entities.*
 )
 @TypeConverters(LocalDateConverter::class, LocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun workoutDao(): WorkoutDao?
+    abstract fun workoutDao(): WorkoutDao
+}
 
-    companion object {
-        var INSTANCE: AppDatabase? = null
+private lateinit var INSTANCE: AppDatabase
 
-        @JvmStatic
-        fun getDatabase(context: Context): AppDatabase? {
-            if (INSTANCE == null) {
-                synchronized(AppDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = databaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java, "person-databse"
-                        )
-                            .build()
-                    }
-                }
-            }
-            return INSTANCE
+fun getDatabase(context: Context): AppDatabase {
+    synchronized(AppDatabase::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java, "person-databse"
+            )
+                .build()
         }
     }
+    return INSTANCE
 }
+/*
+
+private lateinit var INSTANCE: AppDatabase
+
+fun getDatabase(context: Context): AppDatabase {
+    synchronized(AppDatabase::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "database-name"
+            )
+                .fallbackToDestructiveMigration()
+                .build()
+        }
+    }
+    return INSTANCE
+}
+
+ */

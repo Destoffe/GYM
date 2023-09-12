@@ -10,8 +10,9 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 
 public class SummaryRepository {
-
+ /*
     final WorkoutDao workoutDao;
+
 
     SummaryRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -75,5 +76,7 @@ public class SummaryRepository {
             return null;
         }
     }
+
+     */
 
 }

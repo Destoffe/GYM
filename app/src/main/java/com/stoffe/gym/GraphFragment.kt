@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.github.mikephil.charting.charts.LineChart
 import com.stoffe.gym.database.WorkoutViewModel
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import kotlinx.coroutines.launch
 
 
 class GraphFragment : Fragment() {
@@ -56,43 +58,40 @@ class GraphFragment : Fragment() {
         linechart.description.text = getString(R.string.graph_label)
 
         workoutViewModel.currentExercise.value?.let {
-            workoutViewModel.getAllExercisesDataWithId(it.uid).observe(
-                viewLifecycleOwner,
-                { exerciseData: List<ExerciseData?>? ->
-                    if (exerciseData == null) {
-                        return@observe
-                    }
-
-                    exerciseData.forEachIndexed { index, data ->
-                        if (data != null) {
-                            weightEntries.add(Entry(index.toFloat(), data.weight.toFloat()))
-                            repsEntries.add(Entry(index.toFloat(), data.reps.toFloat()))
-                            setsEntries.add(Entry(index.toFloat(), data.sets.toFloat()))
-                        }
-                    }
-                    val weightDataSet = LineDataSet(weightEntries, getString(R.string.weight))
-                    val repsDataSet = LineDataSet(repsEntries, getString(R.string.reps))
-                    val setsDataSet = LineDataSet(setsEntries, getString(R.string.sets))
-                    weightDataSet.lineWidth = 4f
-                    weightDataSet.valueTextSize = 12f
-                    repsDataSet.lineWidth = 4f
-                    repsDataSet.valueTextSize = 12f
-                    repsDataSet.setColors(Color.GREEN)
-                    setsDataSet.lineWidth = 4f
-                    setsDataSet.valueTextSize = 12f
-                    setsDataSet.setColors(Color.RED)
-                    linechart.notifyDataSetChanged()
-                    val dataSets = ArrayList<ILineDataSet>()
-                    dataSets.add(weightDataSet)
-                    dataSets.add(repsDataSet)
-                    dataSets.add(setsDataSet)
-                    val data = LineData(dataSets)
-                    linechart.data = data
-                    linechart.invalidate()
-
-                })
-
+            workoutViewModel.setExerciseDataID(it.uid)
             binding.toolbar.title = it.name
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            workoutViewModel.allExercisesDataWithId.collect { exerciseData ->
+                if (exerciseData == null) {
+                    return@collect
+                }
+
+                exerciseData.forEachIndexed { index, data ->
+                    weightEntries.add(Entry(index.toFloat(), data.weight.toFloat()))
+                    repsEntries.add(Entry(index.toFloat(), data.reps.toFloat()))
+                    setsEntries.add(Entry(index.toFloat(), data.sets.toFloat()))
+                }
+                val weightDataSet = LineDataSet(weightEntries, getString(R.string.weight))
+                val repsDataSet = LineDataSet(repsEntries, getString(R.string.reps))
+                val setsDataSet = LineDataSet(setsEntries, getString(R.string.sets))
+                weightDataSet.lineWidth = 4f
+                weightDataSet.valueTextSize = 12f
+                repsDataSet.lineWidth = 4f
+                repsDataSet.valueTextSize = 12f
+                repsDataSet.setColors(Color.GREEN)
+                setsDataSet.lineWidth = 4f
+                setsDataSet.valueTextSize = 12f
+                setsDataSet.setColors(Color.RED)
+                linechart.notifyDataSetChanged()
+                val dataSets = ArrayList<ILineDataSet>()
+                dataSets.add(weightDataSet)
+                dataSets.add(repsDataSet)
+                dataSets.add(setsDataSet)
+                val data = LineData(dataSets)
+                linechart.data = data
+                linechart.invalidate()
+            }
         }
 
         binding.toolbar.setNavigationOnClickListener { view12: View? ->

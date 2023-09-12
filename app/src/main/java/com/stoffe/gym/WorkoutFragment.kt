@@ -1,144 +1,136 @@
-package com.stoffe.gym;
+package com.stoffe.gym
 
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.DialogInterface
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.stoffe.gym.Adapters.AddExerciseLayout
+import com.stoffe.gym.Adapters.ExerciseAdapter
+import com.stoffe.gym.Adapters.LogDataDialogLayout
+import com.stoffe.gym.Helpers.Utils
+import com.stoffe.gym.database.WorkoutViewModel
+import com.stoffe.gym.database.entities.Exercise
+import com.stoffe.gym.database.entities.ExerciseData
+import com.stoffe.gym.database.entities.Workout
+import kotlinx.coroutines.launch
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.stoffe.gym.Adapters.LogDataDialogLayout;
-import com.stoffe.gym.Helpers.Utils;
-import com.stoffe.gym.database.entities.Exercise;
-import com.stoffe.gym.database.WorkoutViewModel;
-import com.stoffe.gym.Adapters.AddExerciseLayout;
-import com.stoffe.gym.Adapters.ExerciseAdapter;
-import com.stoffe.gym.database.entities.ExerciseData;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class WorkoutFragment extends Fragment {
-
-    RecyclerView exerciseRecycleView;
-    ExerciseAdapter exerciseAdapter;
-    List<Exercise> exerciseList;
-    WorkoutViewModel viewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+class WorkoutFragment : Fragment() {
+     lateinit var exerciseRecycleView: RecyclerView
+    var exerciseAdapter: ExerciseAdapter? = null
+    var exerciseList: MutableList<Exercise>? = null
+    var viewModel: WorkoutViewModel? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_workout, container, false);
+        return inflater.inflate(R.layout.fragment_workout, container, false)
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        exerciseList = new ArrayList<>();
-        viewModel = new ViewModelProvider(requireActivity()).get(WorkoutViewModel.class);
-
-        exerciseAdapter = new ExerciseAdapter(exercise -> {
-            viewModel.setCurrentExercise(exercise);
-            NavHostFragment.findNavController(WorkoutFragment.this)
-                    .navigate(R.id.action_SecondFragment_to_exerciseFragment);
-        }, exercise -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
-            builder.setTitle(getString(R.string.delete_exercise) + " " + exercise.name + "?");
-            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                viewModel.deleteExercise(exercise);
-                exerciseList.remove(exercise);
-            });
-            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
-            builder.show();
-        }, exercise -> {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
-            builder.setTitle(R.string.create_new_exercise_data);
-            LogDataDialogLayout LL = new LogDataDialogLayout(getContext());
-            builder.setView(LL);
-            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if (TextUtils.isEmpty(LL.setsEditText.getText())|| TextUtils.isEmpty(LL.repsEditText.getText()) ||TextUtils.isEmpty(LL.weightEditText.getText())) {
-                    Utils.showSnackbar(getString(R.string.exercise_data_missing), getView());
-                    return;
-                }
-
-                int sets = Integer.parseInt(LL.setsEditText.getText().toString());
-                int reps = Integer.parseInt(LL.repsEditText.getText().toString());
-                int weight = Integer.parseInt(LL.weightEditText.getText().toString());
-
-                ExerciseData exerciseData = new ExerciseData(sets, reps, weight, exercise.uid);
-                viewModel.insertExerciseData(exerciseData);
-                Utils.showSnackbar(getString(R.string.exercise_data_added), view);
-            });
-            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
-            builder.show();
-
-        }, exercise -> {
-            viewModel.setCurrentExercise(exercise);
-            NavHostFragment.findNavController(WorkoutFragment.this)
-                    .navigate(R.id.action_SecondFragment_to_graphFragment);
-        });
-
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(view12 -> NavHostFragment.findNavController(WorkoutFragment.this)
-                .navigate(R.id.action_SecondFragment_to_FirstFragment));
-
-        viewModel.getCurrentWorkout().observe(getViewLifecycleOwner(), workout -> {
-            if (workout == null) {
-                return;
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        exerciseList = ArrayList()
+        viewModel = ViewModelProvider(requireActivity()).get(WorkoutViewModel::class.java)
+        exerciseAdapter = ExerciseAdapter({ exercise: Exercise? ->
+            viewModel!!.setCurrentExercise(exercise!!)
+            NavHostFragment.findNavController(this@WorkoutFragment)
+                .navigate(R.id.action_SecondFragment_to_exerciseFragment)
+        }, { exercise: Exercise ->
+            val builder = AlertDialog.Builder(requireContext(), R.style.dialog_style)
+            builder.setTitle(getString(R.string.delete_exercise) + " " + exercise.name + "?")
+            builder.setPositiveButton(R.string.positive_button) { dialog: DialogInterface?, which: Int ->
+                viewModel!!.deleteExercise(exercise)
+                (exerciseList as ArrayList<Exercise>).remove(exercise)
             }
-            toolbar.setTitle(workout.getName());
-
-            viewModel.getAllExercisesWithId(workout.uid).observe(getViewLifecycleOwner(), exercises -> {
-                if (exercises == null) {
-                    return;
+            builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, which: Int -> dialog.cancel() }
+            builder.show()
+        }, { exercise: Exercise ->
+            val builder = AlertDialog.Builder(requireContext(), R.style.dialog_style)
+            builder.setTitle(R.string.create_new_exercise_data)
+            val LL = LogDataDialogLayout(context)
+            builder.setView(LL)
+            builder.setPositiveButton(R.string.positive_button) { dialog: DialogInterface?, which: Int ->
+                if (TextUtils.isEmpty(LL.setsEditText.text) || TextUtils.isEmpty(LL.repsEditText.text) || TextUtils.isEmpty(
+                        LL.weightEditText.text
+                    )
+                ) {
+                    Utils.showSnackbar(getString(R.string.exercise_data_missing), getView())
+                    return@setPositiveButton
                 }
-                exerciseList = exercises;
-                exerciseAdapter.setData(exerciseList);
-            });
-        });
+                val sets = LL.setsEditText.text.toString().toInt()
+                val reps = LL.repsEditText.text.toString().toInt()
+                val weight = LL.weightEditText.text.toString().toInt()
+                val exerciseData = ExerciseData(sets, reps, weight, exercise.uid)
+                viewModel!!.insertExerciseData(exerciseData)
+                Utils.showSnackbar(getString(R.string.exercise_data_added), view)
+            }
+            builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, which: Int -> dialog.cancel() }
+            builder.show()
+        }) { exercise: Exercise? ->
+            viewModel!!.setCurrentExercise(exercise!!)
+            NavHostFragment.findNavController(this@WorkoutFragment)
+                .navigate(R.id.action_SecondFragment_to_graphFragment)
+        }
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener { view12: View? ->
+            NavHostFragment.findNavController(this@WorkoutFragment)
+                .navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
+        viewModel!!.getCurrentWorkout().observe(viewLifecycleOwner) { workout: Workout? ->
+            if (workout == null) {
+                return@observe
+            }
+            toolbar.title = workout.getName()
+            viewModel!!.setExerciseID(workout.uid)
+        }
 
-        exerciseRecycleView = view.findViewById(R.id.recycle_view);
-
-        exerciseRecycleView.setAdapter(exerciseAdapter);
-
-        ExtendedFloatingActionButton button = view.findViewById(R.id.fab_exercise);
-        button.setOnClickListener(view1 -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.dialog_style);
-            builder.setTitle(R.string.create_new_exercise);
-            AddExerciseLayout LL = new AddExerciseLayout(getContext(), false, true);
-            LL.setBackgroundColor(getResources().getColor(R.color.white_background));
-            LL.setEditText(getString(R.string.hint_exercise_name));
-            builder.setView(LL);
-            builder.setPositiveButton(R.string.positive_button, (dialog, which) -> {
-                if (!TextUtils.isEmpty(LL.editText.getText())) {
-                    Exercise exercise = new Exercise(LL.editText.getText().toString(), viewModel.getCurrentWorkout().getValue().uid);
-                    viewModel.insertExercise(exercise);
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel!!.allExercisesWithId.collect { exercises ->
+                if(exercises == null){
+                    return@collect
+                }
+                exerciseList = exercises?.toMutableList()
+                exerciseAdapter!!.setData(exerciseList)
+            }
+        }
+        run {}
+        exerciseRecycleView = view.findViewById(R.id.recycle_view)
+        exerciseRecycleView.adapter = exerciseAdapter
+        val button = view.findViewById<ExtendedFloatingActionButton>(R.id.fab_exercise)
+        button.setOnClickListener { view1: View? ->
+            val builder = AlertDialog.Builder(requireContext(), R.style.dialog_style)
+            builder.setTitle(R.string.create_new_exercise)
+            val LL = AddExerciseLayout(context, false, true)
+            LL.setBackgroundColor(resources.getColor(R.color.white_background))
+            LL.setEditText(getString(R.string.hint_exercise_name))
+            builder.setView(LL)
+            builder.setPositiveButton(R.string.positive_button) { dialog: DialogInterface?, which: Int ->
+                if (!TextUtils.isEmpty(LL.editText.text)) {
+                    val exercise = Exercise(
+                        LL.editText.text.toString(),
+                        viewModel!!.getCurrentWorkout().value!!.uid
+                    )
+                    viewModel!!.insertExercise(exercise)
                 } else {
-                    Utils.showSnackbar(getString(R.string.dialog_workout_created_error), view);
+                    Utils.showSnackbar(getString(R.string.dialog_workout_created_error), view)
                 }
-            });
-            builder.setNegativeButton(R.string.negative_button, (dialog, which) -> dialog.cancel());
-            builder.show();
-        });
-
+            }
+            builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, which: Int -> dialog.cancel() }
+            builder.show()
+        }
     }
 }

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.github.mikephil.charting.charts.LineChart
 
@@ -20,6 +21,7 @@ import com.stoffe.gym.Helpers.Utils
 import com.stoffe.gym.database.BmiViewModel
 import com.stoffe.gym.database.entities.BMI
 import com.stoffe.gym.databinding.FragmentBmiBinding
+import kotlinx.coroutines.launch
 
 
 class BmiFragment : Fragment() {
@@ -55,34 +57,35 @@ class BmiFragment : Fragment() {
         linechart.axisRight.setDrawGridLines(false)
         linechart.description.text = getString(R.string.bmi_graphh_label)
 
-        bmiViewModel.allBMI.observe(viewLifecycleOwner) { bmi: List<BMI?>? ->
-            if (bmi == null) {
-                return@observe
-            }
-            if (bmi.isEmpty()) {
-                return@observe
-            }
-            bmi.forEachIndexed { index, data ->
-                if (data != null) {
-                    weightEntries.add(Entry(index.toFloat(), data.weight))
-                    repsEntries.add(Entry(index.toFloat(), Utils.calculateBMI(data.weight,data.height)))
+        viewLifecycleOwner.lifecycleScope.launch {
+            bmiViewModel.allBMI.collect { bmi ->
+                if (bmi == null) {
+                    return@collect
                 }
+                if (bmi.isEmpty()) {
+                    return@collect
+                }
+                bmi.forEachIndexed { index, data ->
+                    if (data != null) {
+                        weightEntries.add(Entry(index.toFloat(), data.weight))
+                        repsEntries.add(Entry(index.toFloat(), Utils.calculateBMI(data.weight,data.height)))
+                    }
+                }
+                val weightDataSet = LineDataSet(weightEntries, getString(R.string.weight))
+                val bmiDataSet = LineDataSet(repsEntries, getString(R.string.bmi_title))
+                weightDataSet.lineWidth = 4f
+                weightDataSet.valueTextSize = 12f
+                bmiDataSet.lineWidth = 4f
+                bmiDataSet.valueTextSize = 12f
+                bmiDataSet.setColors(Color.GREEN)
+                linechart.notifyDataSetChanged()
+                val dataSets = ArrayList<ILineDataSet>()
+                dataSets.add(weightDataSet)
+                dataSets.add(bmiDataSet)
+                val data = LineData(dataSets)
+                linechart.data = data
+                linechart.invalidate()
             }
-            val weightDataSet = LineDataSet(weightEntries, getString(R.string.weight))
-            val bmiDataSet = LineDataSet(repsEntries, getString(R.string.bmi_title))
-            weightDataSet.lineWidth = 4f
-            weightDataSet.valueTextSize = 12f
-            bmiDataSet.lineWidth = 4f
-            bmiDataSet.valueTextSize = 12f
-            bmiDataSet.setColors(Color.GREEN)
-            linechart.notifyDataSetChanged()
-            val dataSets = ArrayList<ILineDataSet>()
-            dataSets.add(weightDataSet)
-            dataSets.add(bmiDataSet)
-            val data = LineData(dataSets)
-            linechart.data = data
-            linechart.invalidate()
-
         }
 
         binding.toolbar.setNavigationOnClickListener { view12: View? ->

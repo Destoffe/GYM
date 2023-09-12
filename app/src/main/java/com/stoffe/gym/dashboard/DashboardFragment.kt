@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -24,18 +25,19 @@ import com.stoffe.gym.database.entities.BMI
 import com.stoffe.gym.database.entities.Summary
 import com.stoffe.gym.database.entities.Workout
 import com.stoffe.gym.databinding.FragmentDashboardBinding
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 class DashboardFragment : Fragment() {
     private var workoutAdapter: WorkoutAdapter? = null
     private lateinit var recyclerView: RecyclerView
-    var testData: MutableList<Workout>? = null
+    var testData: MutableList<Workout>?  = mutableListOf()
     private var viewModel: WorkoutViewModel? = null
     private lateinit var dashboardViewModel: DashboardViewModel
     private var binding: FragmentDashboardBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        workoutAdapter = WorkoutAdapter({ workout: Workout? ->
+        workoutAdapter = WorkoutAdapter({ workout: Workout ->
             viewModel!!.setCurrentWorkout(workout)
             NavHostFragment.findNavController(this@DashboardFragment)
                 .navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -51,7 +53,7 @@ class DashboardFragment : Fragment() {
             }
             builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, which: Int -> dialog.cancel() }
             builder.show()
-        }, OnButtonClickListener { workout: Workout ->
+        }, { workout: Workout ->
             var i = 0
             while (i < workoutAdapter!!.dataSet.size) {
                 if (workoutAdapter!!.dataSet[i].isActive && workoutAdapter!!.dataSet[i].getUid() != workout.getUid()) {
@@ -153,34 +155,41 @@ class DashboardFragment : Fragment() {
             builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             builder.show()
         }
-        testData = ArrayList()
         workoutAdapter!!.setData(testData)
         recyclerView.adapter = workoutAdapter
-        viewModel!!.allWorkouts.observe(viewLifecycleOwner) { workouts: MutableList<Workout>? ->
-            if (workouts == null) {
-                binding!!.isWorkoutListEmpty = true
-                return@observe
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel!!.allWorkouts.collect { workouts ->
+                if (workouts == null) {
+                    binding!!.isWorkoutListEmpty = true
+                    return@collect
+                }
+                binding!!.isWorkoutListEmpty = workouts.size < 1
+                workoutAdapter!!.setData(workouts)
             }
-            binding!!.isWorkoutListEmpty = workouts.size < 1
-            testData = workouts
-            workoutAdapter!!.setData(testData)
         }
+
+        /*
         viewModel!!.allSummaries.observe(viewLifecycleOwner) { summaries: List<Summary?>? ->
             if (summaries == null || summaries.isEmpty()) {
                 return@observe
             }
             binding!!.summary = summaries[0]
         }
-        dashboardViewModel.allBMI.observe(viewLifecycleOwner) { bmi: List<BMI?>? ->
-            if (bmi == null) {
-                return@observe
+
+         */
+        viewLifecycleOwner.lifecycleScope.launch {
+            dashboardViewModel.allBMI.collect { bmi ->
+                if (bmi == null) {
+                    return@collect
+                }
+                if (bmi.isEmpty()) {
+                    return@collect
+                }
+                val latestBmi = bmi[bmi.size - 1]
+                binding!!.bmiCard.setBmi(latestBmi)
+                binding!!.bmi = latestBmi
             }
-            if (bmi.isEmpty()) {
-                return@observe
-            }
-            val latestBmi = bmi[bmi.size - 1]
-            binding!!.bmiCard.setBmi(latestBmi)
-            binding!!.bmi = latestBmi
         }
 
         binding?.bmiCard?.bmiCard?.setOnClickListener {

@@ -1,85 +1,73 @@
-package com.stoffe.gym.database;
+package com.stoffe.gym.database
 
-import com.stoffe.gym.database.entities.BMI;
-import com.stoffe.gym.database.entities.Exercise;
-import com.stoffe.gym.database.entities.ExerciseData;
-import com.stoffe.gym.database.entities.Summary;
-import com.stoffe.gym.database.entities.Workout;
-
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.stoffe.gym.database.entities.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-public interface WorkoutDao {
+interface WorkoutDao {
 
     @Query("SELECT * FROM workout")
-    LiveData<List<Workout>> getAllWorkout();
+    fun getAllWorkouts(): Flow<List<Workout>>
 
     @Query("SELECT * FROM workout WHERE uid IN (:workoutIds)")
-    List<Workout> loadAllByIds(int[] workoutIds);
+    fun loadAllByIds(workoutIds: IntArray?): List<Workout?>?
 
     @Query("SELECT * FROM Workout WHERE name LIKE :first LIMIT 1")
-    Workout findByName(String first);
+    fun findByName(first: String?): Workout?
 
-    @Update()
-    void updateWorkout(Workout workout);
+    @Update
+    fun updateWorkout(workout: Workout)
 
     @Insert
-    void insertAllWorkout(Workout... workouts);
+    fun insertAllWorkout(vararg workouts: Workout?)
 
     @Delete
-    void deleteWorkout(Workout workout);
-
+    fun deleteWorkout(workout: Workout)
 
     @Query("SELECT * FROM exercise")
-    LiveData<List<Exercise>> getAllExercise();
+    fun getAllExercises(): Flow<List<Exercise>>
 
     @Query("SELECT * FROM exercise WHERE workoutID IN (:workoutID)")
-    LiveData<List<Exercise>> getAllExerciseWithId(int workoutID);
+    suspend fun getAllExerciseWithId(workoutID: Int): List<Exercise>
 
     @Insert
-    void insertAllExercise(Exercise... exercises);
+    fun insertAllExercise(vararg exercises: Exercise?)
 
     @Delete
-    void deleteExercise(Exercise exercise);
+    fun deleteExercise(exercise: Exercise?)
 
-    @Query("SELECT * FROM exercisedata")
-    LiveData<List<ExerciseData>> getAllExerciseData();
+    @get:Query("SELECT * FROM exercisedata")
+    val allExerciseData: LiveData<List<ExerciseData?>?>?
 
     @Query("SELECT * FROM exercisedata WHERE exerciseID IN (:exerciseID)")
-    LiveData<List<ExerciseData>> getAllExerciseDataWithId(int exerciseID);
+    suspend fun getAllExerciseDataWithId(exerciseID: Int):List<ExerciseData>
 
     @Insert
-    void insertAllExerciseData(ExerciseData... exerciseData);
+    fun insertAllExerciseData(vararg exerciseData: ExerciseData)
 
     @Delete
-    void deleteExerciseData(ExerciseData exerciseData);
+    fun deleteExerciseData(exerciseData: ExerciseData?)
 
     @Delete
-    void insertAllSummary(Summary... summary);
+    fun insertAllSummary(vararg summary: Summary?)
 
     @Delete
-    void deleteSummary(Summary summary);
+    fun deleteSummary(summary: Summary?)
 
-    @Update()
-    void updateSummary(Summary summary);
+    @Update
+    fun updateSummary(summary: Summary?)
 
-    @Query("SELECT * FROM summary")
-    LiveData<List<Summary>> getAllSummary();
+    @get:Query("SELECT * FROM summary")
+    val allSummary: LiveData<List<Summary?>?>?
 
     @Insert
-    void insertBMI(BMI... bmi);
+    fun insertBMI(vararg bmi: BMI?)
 
     @Query("SELECT * FROM BMI")
-    LiveData<List<BMI>> getAllBMI();
+    fun getAllBMI(): Flow<List<BMI>>
 
-    @Update()
-    void updateBMI(BMI bmi);
-
+    @Update
+    fun updateBMI(bmi: BMI?)
 }

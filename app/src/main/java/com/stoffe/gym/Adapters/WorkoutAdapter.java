@@ -113,10 +113,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
                     lastTimeTextView.setText(workout.getLastTime().toString());
                 }
             }
-
-
         }
-
     }
 
     public void setData(List<Workout> data) {
