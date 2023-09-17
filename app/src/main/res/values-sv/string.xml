@@ -40,7 +40,7 @@
 
     <string name="exercise_reps_ammount">Reps: %d</string>
     <string name="exercise_sets_ammount">Sets: %d</string>
-    <string name="exercise_weight_ammount">Vikt: %d</string>
+    <string name="exercise_weight_ammount">Vikt: %1$.1f</string>
 
     <string name="exercise_reps_ammount_dialog">Reps:</string>
     <string name="exercise_sets_ammount_dialog">Sets:</string>

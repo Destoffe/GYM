@@ -76,10 +76,10 @@ fun ExerciseScreen(
                 ) {
                     items(exerciseData) { exerciseData ->
                         ExerciseCard(
-                            setsText = exerciseData.sets.toString(),
-                            repsText = exerciseData.reps.toString(),
-                            weightText = exerciseData.weight.toString(),
-                            dateText = exerciseData.date.toString(),
+                            setsText = stringResource(id = R.string.exercise_sets_ammount,exerciseData.sets),
+                            repsText = stringResource(id = R.string.exercise_reps_ammount, exerciseData.reps),
+                            weightText = stringResource(id = R.string.exercise_weight_ammount, exerciseData.weight),
+                            dateText =  exerciseData.date.toString(),
                             onCardClick = {}
                         )
                     }

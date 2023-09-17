@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.stoffe.gym.R
 import com.stoffe.gym.database.WorkoutViewModel
+import com.stoffe.gym.exercise.ExerciseDataGraphActivity
 
 
 class WorkoutFragmentNew : Fragment() {
@@ -46,6 +47,11 @@ class WorkoutFragmentNew : Fragment() {
                     onCreateExercise = {
                         val intent = Intent(activity, ExerciseAddActivity::class.java)
                         intent.putExtra("workoutID",workoutID)
+                        startActivity(intent)
+                    },
+                    onGraphIconClicked = {exerciseID ->
+                        val intent = Intent(activity, ExerciseDataGraphActivity::class.java)
+                        intent.putExtra("exerciseID",exerciseID)
                         startActivity(intent)
                     }
                 )

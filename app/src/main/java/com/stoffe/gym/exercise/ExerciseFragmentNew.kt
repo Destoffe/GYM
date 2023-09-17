@@ -12,10 +12,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.stoffe.gym.R
-import com.stoffe.gym.dashboard.WorkoutAddActivity
 import com.stoffe.gym.database.WorkoutViewModel
-import com.stoffe.gym.workout.WorkoutScreen
 
 class ExerciseFragmentNew : Fragment() {
     private lateinit var workoutViewModel: WorkoutViewModel

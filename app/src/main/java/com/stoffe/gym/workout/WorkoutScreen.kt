@@ -33,6 +33,7 @@ fun WorkoutScreen(
     onExerciseCardClick: (Exercise) -> Unit,
     onCreateExercise: () -> Unit,
     onBackArrowClick: () -> Unit,
+    onGraphIconClicked: (Int) -> Unit,
     navController: NavController,
 ) {
 
@@ -72,7 +73,7 @@ fun WorkoutScreen(
                         GymCard(
                             cardTitle = exercise.name,
                             onCardClick = { onExerciseCardClick(exercise) },
-                            onFirstIconClick = { /*TODO*/ },
+                            onFirstIconClick = { onGraphIconClicked(exercise.uid) },
                             onSecondIconClick = { /*TODO*/ },
                             iconOne = R.drawable.ic_baseline_show_chart_24,
                             iconTwo = R.drawable.ic_baseline_add_24
@@ -95,7 +96,8 @@ fun DashboardScreenPreview() {
             onBackArrowClick = {},
             navController = NavController(LocalContext.current),
             currentWorkout = Workout(),
-            onCreateExercise = {}
+            onCreateExercise = {},
+            onGraphIconClicked = {}
         )
     }
 }

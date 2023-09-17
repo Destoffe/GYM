@@ -33,6 +33,10 @@
             android:name=".exercise.ExerciseDataAddActivity"
             android:exported="true"
             android:theme="@style/Theme.GYM" />
+        <activity
+            android:name=".exercise.ExerciseDataGraphActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GYM" />
     </application>
 
 </manifest>
