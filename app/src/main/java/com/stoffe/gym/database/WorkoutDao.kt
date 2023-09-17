@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WorkoutDao {
 
-    @Query("SELECT * FROM workout")
+    @Query("SELECT * FROM workout ORDER BY lastTime DESC")
     fun getAllWorkouts(): Flow<List<Workout>>
 
     @Query("SELECT * FROM workout WHERE uid IN (:workoutIds)")
@@ -32,6 +32,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM exercise WHERE workoutID IN (:workoutID)")
     suspend fun getAllExerciseWithId(workoutID: Int): List<Exercise>
 
+    @Query("SELECT * FROM exercise WHERE workoutID IN (:workoutID)")
+    fun getAllExerciseWithIdTest(workoutID: Int): Flow<List<Exercise>>
+
     @Insert
     fun insertAllExercise(vararg exercises: Exercise?)
 
@@ -42,7 +45,7 @@ interface WorkoutDao {
     val allExerciseData: LiveData<List<ExerciseData?>?>?
 
     @Query("SELECT * FROM exercisedata WHERE exerciseID IN (:exerciseID)")
-    suspend fun getAllExerciseDataWithId(exerciseID: Int):List<ExerciseData>
+    fun getAllExerciseDataWithId(exerciseID: Int):Flow<List<ExerciseData>>
 
     @Insert
     fun insertAllExerciseData(vararg exerciseData: ExerciseData)
@@ -65,7 +68,7 @@ interface WorkoutDao {
     @Insert
     fun insertBMI(vararg bmi: BMI?)
 
-    @Query("SELECT * FROM BMI")
+    @Query("SELECT * FROM BMI ORDER BY date DESC")
     fun getAllBMI(): Flow<List<BMI>>
 
     @Update

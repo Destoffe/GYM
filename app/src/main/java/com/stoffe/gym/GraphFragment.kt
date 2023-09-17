@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.github.mikephil.charting.charts.LineChart
 import com.stoffe.gym.database.WorkoutViewModel
-import com.stoffe.gym.database.entities.ExerciseData
 import com.stoffe.gym.databinding.FragmentGraphBinding
 
 import com.github.mikephil.charting.data.Entry
@@ -58,7 +57,6 @@ class GraphFragment : Fragment() {
         linechart.description.text = getString(R.string.graph_label)
 
         workoutViewModel.currentExercise.value?.let {
-            workoutViewModel.setExerciseDataID(it.uid)
             binding.toolbar.title = it.name
         }
         viewLifecycleOwner.lifecycleScope.launch {

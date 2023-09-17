@@ -7,61 +7,76 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.stoffe.gym.dashboard.DashboardFragment"
+        android:name="com.stoffe.gym.dashboard.DashboardFragmentNew"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_dashboard">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
         <action
             android:id="@+id/action_FirstFragment_to_bmiFragment"
-            app:destination="@id/bmiFragment" />
+            app:destination="@id/bmiFragment"
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.stoffe.gym.WorkoutFragment"
+        android:name="com.stoffe.gym.workout.WorkoutFragmentNew"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_workout">
+
+        <argument
+            android:name="workoutID"
+            android:defaultValue="0"
+            app:argType="integer" />
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
         <action
             android:id="@+id/action_SecondFragment_to_exerciseFragment"
             app:destination="@id/exerciseFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
         <action
             android:id="@+id/action_SecondFragment_to_graphFragment"
             app:destination="@id/graphFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
-        android:name="com.stoffe.gym.ExerciseFragment"
+        android:name="com.stoffe.gym.exercise.ExerciseFragmentNew"
         android:label="ExerciseFragment"
         tools:layout="@layout/fragment_exercise">
+
+        <argument
+            android:name="exerciseID"
+            android:defaultValue="0"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_exerciseFragment_to_SecondFragment"
             app:destination="@id/SecondFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -71,7 +86,11 @@
         tools:layout="@layout/fragment_graph">
         <action
             android:id="@+id/action_graphFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/SecondFragment"
+            app:enterAnim="@anim/default_enter_anim"
+            app:exitAnim="@anim/default_exit_anim"
+            app:popEnterAnim="@anim/default_pop_enter_anim"
+            app:popExitAnim="@anim/default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/bmiFragment"

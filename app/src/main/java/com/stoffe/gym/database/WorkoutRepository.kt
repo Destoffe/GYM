@@ -12,7 +12,7 @@ class WorkoutRepository(private val database: AppDatabase) {
         }
     }
 
-    val workouts: Flow<List<Workout?>?> = database.workoutDao().getAllWorkouts()
+    val workouts: Flow<List<Workout>> = database.workoutDao().getAllWorkouts()
 
     suspend fun update(workout: Workout){
         withContext(Dispatchers.IO){

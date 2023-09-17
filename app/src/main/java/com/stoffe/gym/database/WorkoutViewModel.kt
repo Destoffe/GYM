@@ -7,12 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.stoffe.gym.database.entities.Exercise
 import com.stoffe.gym.database.entities.ExerciseData
-import com.stoffe.gym.database.entities.Summary
 import com.stoffe.gym.database.entities.Workout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -27,35 +25,20 @@ class WorkoutViewModel(application: Application) : AndroidViewModel(
     private val currentWorkout: MutableLiveData<Workout>
     val currentExercise: MutableLiveData<Exercise>
 
-    val allExercisesWithId = MutableStateFlow<List<Exercise>?>(null)
     val allExercisesDataWithId = MutableStateFlow<List<ExerciseData>?>(null)
 
-    private val exerciseId: MutableStateFlow<Int?> = MutableStateFlow(null)
+    fun getExercisesById(id: Int): Flow<List<Exercise>> {
+        return exerciseRepository.getExerciseWithIDTest(id)
+    }
 
-    val allExercises = exerciseRepository.exercises
+    fun getExercisesDataById(id: Int): Flow<List<ExerciseData>> {
+        return exerciseRepository.getExerciseDataWithID(id)
+    }
 
     init {
        // summaryRepository = SummaryRepository(application)
         currentWorkout = MutableLiveData()
         currentExercise = MutableLiveData()
-    }
-
-    fun setExerciseID(id: Int) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val exercises = exerciseRepository.getExerciseWithID(id)
-                allExercisesWithId.value = exercises
-            }
-        }
-    }
-
-    fun setExerciseDataID(id: Int) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val exercises = exerciseRepository.getExerciseDataWithID(id)
-                allExercisesDataWithId.value = exercises
-            }
-        }
     }
 
     fun insertWorkout(workout: Workout) {
@@ -67,6 +50,7 @@ class WorkoutViewModel(application: Application) : AndroidViewModel(
 
     fun updateWorkout(workout: Workout) {
         viewModelScope.launch {
+            workout.setActive(!workout.isActive)
             workoutRepository.update(workout)
         }
     }

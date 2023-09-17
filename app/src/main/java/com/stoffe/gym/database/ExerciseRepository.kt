@@ -16,7 +16,11 @@ class ExerciseRepository(private val database: AppDatabase) {
         return database.workoutDao().getAllExerciseWithId(id)
     }
 
-    suspend fun getExerciseDataWithID(id: Int): List<ExerciseData>{
+     fun getExerciseWithIDTest(id: Int): Flow<List<Exercise>>{
+        return database.workoutDao().getAllExerciseWithIdTest(id)
+    }
+
+    fun getExerciseDataWithID(id: Int): Flow<List<ExerciseData>>{
         return database.workoutDao().getAllExerciseDataWithId(id)
     }
 

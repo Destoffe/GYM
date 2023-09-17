@@ -1,4 +1,4 @@
-package com.stoffe.gym
+package com.stoffe.gym.exercise
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.ItemTouchHelper
 import com.stoffe.gym.Adapters.ExerciseDataAdapter
 import com.stoffe.gym.Adapters.LogDataDialogLayout
 import com.stoffe.gym.Helpers.Utils
+import com.stoffe.gym.R
 import com.stoffe.gym.database.WorkoutViewModel
 import com.stoffe.gym.database.entities.ExerciseData
 import com.stoffe.gym.databinding.FragmentExerciseBinding
@@ -60,7 +60,12 @@ class ExerciseFragment : Fragment() {
             if (exercise == null) {
                 return@observe
             }
-            viewModel!!.setExerciseDataID(exercise.uid)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel!!.getExercisesDataById(exercise.uid).collect { exerciseData ->
+                    exerciseDataList = exerciseData as MutableList<ExerciseData>?
+                    exerciseDataAdapter!!.setData(exerciseDataList)
+                }
+            }
             binding!!.toolbar.title = exercise.name
         }
         binding!!.fabExercise.setOnClickListener { view1: View? ->
@@ -88,14 +93,5 @@ class ExerciseFragment : Fragment() {
             builder.show()
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel!!.allExercisesDataWithId.collect {exerciseData ->
-                if (exerciseData == null) {
-                    return@collect
-                }
-                exerciseDataList = exerciseData as MutableList<ExerciseData>?
-                exerciseDataAdapter!!.setData(exerciseDataList)
-            }
-        }
     }
 }

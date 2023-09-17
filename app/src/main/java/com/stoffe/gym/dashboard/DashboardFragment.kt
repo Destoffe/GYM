@@ -187,15 +187,10 @@ class DashboardFragment : Fragment() {
                     return@collect
                 }
                 val latestBmi = bmi[bmi.size - 1]
-                binding!!.bmiCard.setBmi(latestBmi)
                 binding!!.bmi = latestBmi
             }
         }
 
-        binding?.bmiCard?.bmiCard?.setOnClickListener {
-            NavHostFragment.findNavController(this@DashboardFragment)
-                .navigate(R.id.action_FirstFragment_to_bmiFragment)
-        }
     }
 
     fun generateDumbData(): List<Workout> {

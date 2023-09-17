@@ -1,4 +1,4 @@
-package com.stoffe.gym
+package com.stoffe.gym.workout
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -18,13 +18,14 @@ import com.stoffe.gym.Adapters.AddExerciseLayout
 import com.stoffe.gym.Adapters.ExerciseAdapter
 import com.stoffe.gym.Adapters.LogDataDialogLayout
 import com.stoffe.gym.Helpers.Utils
+import com.stoffe.gym.R
 import com.stoffe.gym.database.WorkoutViewModel
 import com.stoffe.gym.database.entities.Exercise
 import com.stoffe.gym.database.entities.ExerciseData
 import com.stoffe.gym.database.entities.Workout
 import kotlinx.coroutines.launch
 
-class WorkoutFragment : Fragment() {
+class WorkoutFragment() : Fragment() {
      lateinit var exerciseRecycleView: RecyclerView
     var exerciseAdapter: ExerciseAdapter? = null
     var exerciseList: MutableList<Exercise>? = null
@@ -95,19 +96,15 @@ class WorkoutFragment : Fragment() {
                 return@observe
             }
             toolbar.title = workout.getName()
-            viewModel!!.setExerciseID(workout.uid)
-        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel!!.allExercisesWithId.collect { exercises ->
-                if(exercises == null){
-                    return@collect
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel!!.getExercisesById(workout.uid).collect { exercises ->
+                    exerciseList = exercises.toMutableList()
+                    exerciseAdapter!!.setData(exerciseList)
                 }
-                exerciseList = exercises?.toMutableList()
-                exerciseAdapter!!.setData(exerciseList)
             }
         }
-        run {}
+
         exerciseRecycleView = view.findViewById(R.id.recycle_view)
         exerciseRecycleView.adapter = exerciseAdapter
         val button = view.findViewById<ExtendedFloatingActionButton>(R.id.fab_exercise)

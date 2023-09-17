@@ -11,15 +11,28 @@
         android:theme="@style/Theme.GYM">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.GYM"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.GYM">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".dashboard.WorkoutAddActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GYM" />
+
+        <activity
+            android:name=".workout.ExerciseAddActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GYM" />
+        <activity
+            android:name=".exercise.ExerciseDataAddActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GYM" />
     </application>
 
 </manifest>
