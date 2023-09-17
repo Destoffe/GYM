@@ -39,6 +39,7 @@ class ExerciseFragmentNew : Fragment() {
                     navController = NavHostFragment.findNavController(this@ExerciseFragmentNew),
                     onFabClick = {
                         val intent = Intent(activity, ExerciseDataAddActivity::class.java)
+                        intent.putExtra("exerciseID",exerciseID)
                         startActivity(intent)
                     }
                 )

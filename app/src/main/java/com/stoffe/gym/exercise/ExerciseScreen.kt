@@ -80,9 +80,8 @@ fun ExerciseScreen(
                             repsText = exerciseData.reps.toString(),
                             weightText = exerciseData.weight.toString(),
                             dateText = exerciseData.date.toString(),
-                        ) {
-
-                        }
+                            onCardClick = {}
+                        )
                     }
                 }
             }
