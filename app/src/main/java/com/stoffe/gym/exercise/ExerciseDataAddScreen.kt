@@ -18,7 +18,7 @@ import com.example.compose.GymTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExerciseDataAddScreen(
-    onCreateExercise: (Int,Int,Int) -> Unit,
+    onCreateExercise: (Int,Int,Float) -> Unit,
     onExit: () -> Unit,
 ) {
     GymTheme {
@@ -48,9 +48,8 @@ fun ExerciseDataAddScreen(
                 reps.text.isEmpty() || reps.text.toIntOrNull() == null
             )
             val weightIsInvalidInput by rememberUpdatedState(
-                weight.text.isEmpty() || weight.text.toIntOrNull() == null
+                weight.text.isEmpty() || weight.text.toFloatOrNull() == null
             )
-
 
             Column(
                 modifier = Modifier
@@ -82,7 +81,10 @@ fun ExerciseDataAddScreen(
                     isError = weightIsInvalidInput
                 )
 
-                Button(onClick = { onCreateExercise(sets.text.toInt(),reps.text.toInt(),weight.text.toInt()) }) {
+                Button(
+                    onClick = { onCreateExercise(sets.text.toInt(),reps.text.toInt(),weight.text.toFloat()) },
+                    enabled = setsIsInvalidInput.not() && repsIsInvalidInput.not() && weightIsInvalidInput.not()
+                ) {
                     Text(stringResource(id = com.stoffe.gym.R.string.add_exercise))
                 }
             }

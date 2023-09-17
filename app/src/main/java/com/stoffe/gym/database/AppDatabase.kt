@@ -12,13 +12,17 @@ import com.stoffe.gym.database.entities.*
 
 @Database(
     entities = [Workout::class, Exercise::class, ExerciseData::class, Summary::class, BMI::class],
-    version = 10,
+    version = 11,
     exportSchema = true,
     autoMigrations = [
         AutoMigration(
             from = 9,
             to = 10,
         ),
+        AutoMigration(
+            from = 10,
+            to = 11,
+        )
     ]
 )
 @TypeConverters(LocalDateConverter::class, LocalDateTimeConverter::class)

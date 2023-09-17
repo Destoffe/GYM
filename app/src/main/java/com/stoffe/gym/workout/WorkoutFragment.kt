@@ -75,8 +75,6 @@ class WorkoutFragment() : Fragment() {
                 val sets = LL.setsEditText.text.toString().toInt()
                 val reps = LL.repsEditText.text.toString().toInt()
                 val weight = LL.weightEditText.text.toString().toInt()
-                val exerciseData = ExerciseData(sets, reps, weight, exercise.uid)
-                viewModel!!.insertExerciseData(exerciseData)
                 Utils.showSnackbar(getString(R.string.exercise_data_added), view)
             }
             builder.setNegativeButton(R.string.negative_button) { dialog: DialogInterface, which: Int -> dialog.cancel() }
