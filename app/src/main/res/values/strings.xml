@@ -67,4 +67,11 @@
     <string name="height_bmi">Height: %1$.1f</string>
     <string name="bmi_bmi">BMI: %1$.1f</string>
     <string name="date_bmi">Date: %1$s</string>
+
+    <string name="hint_weight">Weight</string>
+    <string name="hint_height">Height</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_gender">Gender</string>
+
+    <string name="add_bmi">Add BMI Data</string>
 </resources>

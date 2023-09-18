@@ -51,6 +51,10 @@ class DashboardFragmentNew : Fragment() {
                     onCreateWorkout = {
                         val intent = Intent(activity, WorkoutAddActivity::class.java)
                         startActivity(intent)
+                    },
+                    onCreateBmi = {
+                        val intent = Intent(activity, BmiAddActivity::class.java)
+                        startActivity(intent)
                     }
                 )
             }

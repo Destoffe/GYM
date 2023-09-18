@@ -35,6 +35,7 @@ fun DashboardScreen(
     onWorkoutStartClick: (Workout) -> Unit,
     onBmiClick: () -> Unit,
     onCreateWorkout: () -> Unit,
+    onCreateBmi: () -> Unit,
     navController: NavController,
 ) {
 
@@ -46,8 +47,9 @@ fun DashboardScreen(
         ) ,
         FabItem(
             icon = Icons.Filled.PersonAdd,
-            stringResource(id = R.string.fab_add_bmi)
-        ) { /*TODO*/ }
+            label = stringResource(id = R.string.fab_add_bmi),
+            onFabItemClicked = onCreateBmi
+        )
     )
     if (workouts != null) {
         GymTheme {
@@ -113,7 +115,8 @@ fun DashboardScreenPreview() {
             onBmiClick = {},
             navController = NavController(LocalContext.current),
             bmi = listOf(BMI(1, 75f, 175f, 1, LocalDateTime.now(), 1)),
-            onCreateWorkout = {}
+            onCreateWorkout = {},
+            onCreateBmi = {}
         )
     }
 }

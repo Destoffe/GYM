@@ -16,13 +16,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.stoffe.gym.Adapters.AddBmiLayout
 import com.stoffe.gym.Adapters.AddExerciseLayout
 import com.stoffe.gym.Adapters.WorkoutAdapter
-import com.stoffe.gym.Adapters.WorkoutAdapter.OnButtonClickListener
 import com.stoffe.gym.Helpers.Utils
 import com.stoffe.gym.R
-import com.stoffe.gym.database.DashboardViewModel
 import com.stoffe.gym.database.WorkoutViewModel
 import com.stoffe.gym.database.entities.BMI
-import com.stoffe.gym.database.entities.Summary
 import com.stoffe.gym.database.entities.Workout
 import com.stoffe.gym.databinding.FragmentDashboardBinding
 import kotlinx.coroutines.launch

@@ -120,4 +120,6 @@ dependencies {
 
     // Houses the core logic for charts and other elements. Included in all other modules.
     implementation("com.patrykandpatrick.vico:core:1.12.0")
+
+    implementation "com.chargemap.compose:numberpicker:1.0.3"
 }
