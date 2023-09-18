@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import com.example.compose.GymTheme
 import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
@@ -96,7 +97,9 @@ fun ExerciseDataGraphScreen(
                         lines = listOf(
                             lineSpec(
                                 lineColor = Color(0xFF6200EE),
-                                dataLabel = textComponent()
+                                dataLabel = textComponent{
+                                    this.color = MaterialTheme.colorScheme.onBackground.toArgb()
+                                }
                             ),
                         )
                     ),
