@@ -42,6 +42,9 @@ class WorkoutFragmentNew : Fragment() {
                         NavHostFragment.findNavController(this@WorkoutFragmentNew)
                             .navigate(R.id.action_SecondFragment_to_exerciseFragment,bundle)
                     },
+                    onExerciseCardLongClick = { exercise ->
+                        workoutViewModel.deleteExercise(exercise)
+                    },
                     navController = NavHostFragment.findNavController(this@WorkoutFragmentNew),
                     onBackArrowClick = { NavHostFragment.findNavController(this@WorkoutFragmentNew).popBackStack()},
                     onCreateExercise = {

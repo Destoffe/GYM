@@ -1,5 +1,7 @@
 package com.stoffe.gym.compose
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.GymTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExerciseCard(
     setsText: String,
@@ -17,12 +19,16 @@ fun ExerciseCard(
     weightText: String,
     dateText: String,
     onCardClick: () -> Unit,
+    onCardLongClick:() -> Unit,
 ) {
     Card(
-        onClick = onCardClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .combinedClickable(
+                onClick = onCardClick,
+                onLongClick = onCardLongClick
+            ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -41,8 +47,15 @@ fun ExerciseCard(
 fun ExerciseCardPreview() {
     GymTheme {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ExerciseCard(setsText = "2", repsText = "2", weightText = "2", dateText = "2022-01-01") {
-            }
+            ExerciseCard(
+                setsText = "2",
+                repsText = "2",
+                weightText = "2",
+                dateText = "2022-01-01",
+                onCardLongClick = {},
+                onCardClick = {}
+            )
+
         }
     }
 }

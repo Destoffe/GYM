@@ -32,6 +32,7 @@ class ExerciseFragmentNew : Fragment() {
                     exerciseData = item,
                     currentExercise = currentExercise!!,
                     onExerciseCardClick = {},
+                    onExerciseCardLongClick = {workoutViewModel.deleteExerciseData(it)},
                     onBackArrowClick = { /*TODO*/ },
                     navController = NavHostFragment.findNavController(this@ExerciseFragmentNew),
                     onFabClick = {

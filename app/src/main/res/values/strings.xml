@@ -15,20 +15,22 @@
     <string name="create_new_workout">Create a new workout</string>
     <string name="hint_workout_name">Workout name</string>
     <string name="delete_workout">Delete Workout?</string>
-    <string name="delete_workout_subtitle">"You're about to delete this workout, deleted workouts cannot be retrived."</string>
+    <string name="delete_workout_subtitle">"You're about to delete this workout, deleted workouts cannot be retrieved."</string>
 
     <string name="no_workouts">There are no workouts, create one!</string>
 
     <string name="positive_button">OK</string>
     <string name="negative_button">Cancel</string>
 
-    <string name="delete_exercise">Delete exercise </string>
+    <string name="delete_exercise">Delete exercise?</string>
+    <string name="delete_exercise_subtitle">"You're about to delete this exercise, deleted exercise cannot be retrieved."</string>
     <string name="no_exercises">There are no exercises, create one!</string>
     <string name="create_new_exercise">Create a new exercise</string>
     <string name="hint_exercise_name">Exercise name</string>
 
 
     <string name="delete_exercise_log">Delete Exercise data?</string>
+    <string name="delete_exercise_data_subtitle">"You're about to delete this exercise data, deleted exercise data cannot be retrieved."</string>
     <string name="no_exercises_data">There are no data, add data!</string>
     <string name="create_new_exercise_data">Add data to this exercise</string>
 
