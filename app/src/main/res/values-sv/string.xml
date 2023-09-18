@@ -20,6 +20,8 @@
     <string name="negative_button">Avbryt</string>
 
     <string name="delete_workout">Radera träningspass?</string>
+    <string name="delete_workout_subtitle">Du är påväg att radera detta träningspasset. Borttagna träningspass går inte att få tillbaka.</string>
+
     <string name="no_workouts">Det finns inga träningspass, skapa ett!</string>
 
     <string name="delete_exercise">Ta bort övning </string>

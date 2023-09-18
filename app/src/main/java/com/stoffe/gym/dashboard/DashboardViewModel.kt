@@ -3,6 +3,7 @@ package com.stoffe.gym.dashboard
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.stoffe.gym.dashboard.bmi.BMIRepository
 import com.stoffe.gym.database.entities.*
 import com.stoffe.gym.database.getDatabase
 import kotlinx.coroutines.launch

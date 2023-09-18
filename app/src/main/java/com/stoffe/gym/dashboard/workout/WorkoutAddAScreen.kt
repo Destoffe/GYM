@@ -1,4 +1,4 @@
-package com.stoffe.gym.workout
+package com.stoffe.gym.dashboard.workout
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

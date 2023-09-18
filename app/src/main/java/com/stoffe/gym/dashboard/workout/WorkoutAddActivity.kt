@@ -1,4 +1,4 @@
-package com.stoffe.gym.dashboard
+package com.stoffe.gym.dashboard.workout
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.stoffe.gym.database.WorkoutViewModel
 import com.stoffe.gym.database.entities.Workout
-import com.stoffe.gym.workout.WorkoutAddScreen
 
 class WorkoutAddActivity : AppCompatActivity() {
     private lateinit var workoutViewModel: WorkoutViewModel

@@ -1,9 +1,10 @@
-package com.stoffe.gym.dashboard
+package com.stoffe.gym.dashboard.bmi
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.stoffe.gym.dashboard.DashboardViewModel
 import com.stoffe.gym.database.entities.BMI
 import java.time.LocalDateTime
 

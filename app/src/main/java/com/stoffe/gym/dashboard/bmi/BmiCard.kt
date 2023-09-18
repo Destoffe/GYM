@@ -1,4 +1,4 @@
-package com.stoffe.gym.dashboard
+package com.stoffe.gym.dashboard.bmi
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card

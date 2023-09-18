@@ -73,6 +73,7 @@ fun WorkoutScreen(
                         GymCard(
                             cardTitle = exercise.name,
                             onCardClick = { onExerciseCardClick(exercise) },
+                            onCardLongClick = {},
                             onFirstIconClick = { onGraphIconClicked(exercise.uid) },
                             onSecondIconClick = { /*TODO*/ },
                             iconOne = R.drawable.ic_baseline_show_chart_24,

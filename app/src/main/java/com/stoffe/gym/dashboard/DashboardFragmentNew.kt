@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.stoffe.gym.R
+import com.stoffe.gym.dashboard.bmi.BmiAddActivity
+import com.stoffe.gym.dashboard.workout.WorkoutAddActivity
 import com.stoffe.gym.database.BmiViewModel
 import com.stoffe.gym.database.WorkoutViewModel
 
@@ -43,6 +45,7 @@ class DashboardFragmentNew : Fragment() {
                         NavHostFragment.findNavController(this@DashboardFragmentNew)
                             .navigate(R.id.action_FirstFragment_to_SecondFragment,bundle)
                     },
+                    onWorkoutCardLongClick = { workout -> workoutViewModel.deleteWorkout(workout)},
                     navController = NavHostFragment.findNavController(this@DashboardFragmentNew),
                     onWorkoutStartClick = {workout -> workoutViewModel.updateWorkout(workout)},
                     onBmiClick = { NavHostFragment.findNavController(this@DashboardFragmentNew)

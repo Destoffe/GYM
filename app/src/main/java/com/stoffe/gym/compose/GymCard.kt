@@ -1,6 +1,8 @@
 package com.stoffe.gym.compose
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -15,12 +17,14 @@ import androidx.compose.ui.unit.sp
 import com.example.compose.GymTheme
 import com.stoffe.gym.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun GymCard(
+    modifier: Modifier = Modifier,
     cardTitle: String,
     subTitle: String? = null,
     onCardClick: () -> Unit,
+    onCardLongClick: () -> Unit,
     onFirstIconClick: () -> Unit,
     onSecondIconClick: () -> Unit,
     @DrawableRes iconOne: Int?,
@@ -28,10 +32,13 @@ fun GymCard(
     isActive: Boolean = false,
 ) {
     Card(
-        onClick = onCardClick,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .combinedClickable(
+                onClick = onCardClick,
+                onLongClick = onCardLongClick
+            ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -76,6 +83,7 @@ fun GymCardPreview() {
             GymCard(
                 cardTitle = "Workout",
                 onCardClick = { /*TODO*/ },
+                onCardLongClick = {},
                 onFirstIconClick = { /*TODO*/ },
                 onSecondIconClick = { /*TODO*/ },
                 iconOne = R.drawable.ic_play,
@@ -85,6 +93,7 @@ fun GymCardPreview() {
                 cardTitle = "Workout",
                 subTitle = "2022-01-01",
                 onCardClick = { /*TODO*/ },
+                onCardLongClick = {},
                 onFirstIconClick = { /*TODO*/ },
                 onSecondIconClick = { /*TODO*/ },
                 iconOne = R.drawable.ic_play,

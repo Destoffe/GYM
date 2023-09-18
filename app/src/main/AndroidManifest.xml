@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".dashboard.WorkoutAddActivity"
+            android:name=".dashboard.workout.WorkoutAddActivity"
             android:exported="true"
             android:theme="@style/Theme.GYM" />
 
@@ -38,7 +38,7 @@
             android:exported="true"
             android:theme="@style/Theme.GYM" />
         <activity
-            android:name=".dashboard.BmiAddActivity"
+            android:name=".dashboard.bmi.BmiAddActivity"
             android:exported="true"
             android:theme="@style/Theme.GYM" />
     </application>

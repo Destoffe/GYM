@@ -1,4 +1,4 @@
-package com.stoffe.gym.dashboard
+package com.stoffe.gym.dashboard.bmi
 
 import androidx.lifecycle.LiveData
 import com.stoffe.gym.database.AppDatabase
