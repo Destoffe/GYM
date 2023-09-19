@@ -41,6 +41,10 @@
             android:name=".dashboard.bmi.BmiAddActivity"
             android:exported="true"
             android:theme="@style/Theme.GYM" />
+        <activity
+            android:name=".dashboard.bmi.BmiGraphActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GYM" />
     </application>
 
 </manifest>

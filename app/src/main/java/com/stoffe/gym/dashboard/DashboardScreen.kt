@@ -43,7 +43,6 @@ fun DashboardScreen(
     onBmiClick: () -> Unit,
     onCreateWorkout: () -> Unit,
     onCreateBmi: () -> Unit,
-    navController: NavController,
 ) {
 
     val fabItems = listOf(
@@ -142,7 +141,6 @@ fun DashboardScreenPreview() {
             onWorkoutCardLongClick = {},
             onWorkoutStartClick = {},
             onBmiClick = {},
-            navController = NavController(LocalContext.current),
             bmi = listOf(BMI(1, 75f, 175f, 1, LocalDateTime.now(), 1)),
             onCreateWorkout = {},
             onCreateBmi = {}

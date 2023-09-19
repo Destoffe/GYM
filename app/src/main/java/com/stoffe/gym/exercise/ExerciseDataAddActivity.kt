@@ -5,7 +5,6 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.stoffe.gym.database.WorkoutViewModel
-import com.stoffe.gym.database.entities.Exercise
 import com.stoffe.gym.database.entities.ExerciseData
 
 class ExerciseDataAddActivity : AppCompatActivity() {

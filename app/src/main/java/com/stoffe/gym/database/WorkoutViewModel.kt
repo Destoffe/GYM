@@ -8,11 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.stoffe.gym.database.entities.Exercise
 import com.stoffe.gym.database.entities.ExerciseData
 import com.stoffe.gym.database.entities.Workout
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class WorkoutViewModel(application: Application) : AndroidViewModel(
     application

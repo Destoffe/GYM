@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.stoffe.gym.database.WorkoutViewModel
 
-class ExerciseFragmentNew : Fragment() {
+class ExerciseFragment : Fragment() {
     private lateinit var workoutViewModel: WorkoutViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class ExerciseFragmentNew : Fragment() {
                     onExerciseCardClick = {},
                     onExerciseCardLongClick = {workoutViewModel.deleteExerciseData(it)},
                     onBackArrowClick = { /*TODO*/ },
-                    navController = NavHostFragment.findNavController(this@ExerciseFragmentNew),
+                    navController = NavHostFragment.findNavController(this@ExerciseFragment),
                     onFabClick = {
                         val intent = Intent(activity, ExerciseDataAddActivity::class.java)
                         intent.putExtra("exerciseID",exerciseID)

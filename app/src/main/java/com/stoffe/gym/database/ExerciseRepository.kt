@@ -2,7 +2,6 @@ package com.stoffe.gym.database
 
 import com.stoffe.gym.database.entities.Exercise
 import com.stoffe.gym.database.entities.ExerciseData
-import com.stoffe.gym.database.entities.Workout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
