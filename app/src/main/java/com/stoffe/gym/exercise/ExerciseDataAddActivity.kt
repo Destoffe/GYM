@@ -15,7 +15,7 @@ class ExerciseDataAddActivity : AppCompatActivity() {
         setContent {
             workoutViewModel = ViewModelProvider(this)[WorkoutViewModel::class.java]
             ExerciseDataAddScreen(
-                onCreateExercise = { reps,sets,weight ->
+                onCreateExercise = { sets,reps,weight ->
                     workoutViewModel.insertExerciseData(ExerciseData(sets = sets, reps = reps, weight = weight, exerciseID = id))
                     finish()
                 },
