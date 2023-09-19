@@ -9,6 +9,8 @@
     <string name="next">Nästa</string>
     <string name="previous">Föregående</string>
 
+    <string name="no_data">Ingen data, tryck på knappen för att lägga till data!</string>
+
     <string name="add_workout">Skapa träningspass</string>
     <string name="fab_add_bmi">Lägg till kropps info</string>
     <string name="fab">Lägg till data</string>

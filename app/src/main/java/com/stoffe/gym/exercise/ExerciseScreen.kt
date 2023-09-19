@@ -1,6 +1,8 @@
 package com.stoffe.gym.exercise
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,37 +48,39 @@ fun ExerciseScreen(
             icon = Icons.Filled.FitnessCenter,
             label = stringResource(id = R.string.add_body_data),
             onFabItemClicked = onFabClick
-        ) ,
+        ),
     )
-    if (exerciseData != null) {
 
-        val openAlertDialog = remember { mutableStateOf(false) }
-        val currentExerciseData = remember { mutableStateOf(ExerciseData(0,0,0,0f,0, LocalDate.now())) }
 
-        GymTheme {
-            Scaffold(
-                floatingActionButton = {
-                    MultiFloatingActionButton(
-                        fabIcon = painterResource(id = R.drawable.ic_baseline_add_24),
-                        items = fabItems
-                    )
-                },
-                floatingActionButtonPosition = FabPosition.End,
-                topBar = {
-                    CenterAlignedTopAppBar(
-                        title = { Text(currentExercise.name) },
-                        navigationIcon = {
-                            IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(
-                                    imageVector = Icons.Filled.ArrowBack,
-                                    contentDescription = "Navigate back arrow"
-                                )
-                            }
+    GymTheme {
+        Scaffold(
+            floatingActionButton = {
+                MultiFloatingActionButton(
+                    fabIcon = painterResource(id = R.drawable.ic_baseline_add_24),
+                    items = fabItems
+                )
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text(currentExercise.name) },
+                    navigationIcon = {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Navigate back arrow"
+                            )
                         }
-                    )
-                },
+                    }
+                )
+            },
 
-                ) {
+            ) {
+            if (!exerciseData.isNullOrEmpty()) {
+
+                val openAlertDialog = remember { mutableStateOf(false) }
+                val currentExerciseData =
+                    remember { mutableStateOf(ExerciseData(0, 0, 0, 0f, 0, LocalDate.now())) }
 
                 when {
                     openAlertDialog.value -> {
@@ -98,10 +103,19 @@ fun ExerciseScreen(
                 ) {
                     items(exerciseData) { exerciseData ->
                         ExerciseCard(
-                            setsText = stringResource(id = R.string.exercise_sets_ammount,exerciseData.sets),
-                            repsText = stringResource(id = R.string.exercise_reps_ammount, exerciseData.reps),
-                            weightText = stringResource(id = R.string.exercise_weight_ammount, exerciseData.weight),
-                            dateText =  exerciseData.date.toString(),
+                            setsText = stringResource(
+                                id = R.string.exercise_sets_ammount,
+                                exerciseData.sets
+                            ),
+                            repsText = stringResource(
+                                id = R.string.exercise_reps_ammount,
+                                exerciseData.reps
+                            ),
+                            weightText = stringResource(
+                                id = R.string.exercise_weight_ammount,
+                                exerciseData.weight
+                            ),
+                            dateText = exerciseData.date.toString(),
                             onCardClick = {},
                             onCardLongClick = {
                                 openAlertDialog.value = true
@@ -110,6 +124,17 @@ fun ExerciseScreen(
                         )
                     }
                 }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues = it)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(id = R.string.no_data))
+                }
+
             }
         }
     }
@@ -125,7 +150,7 @@ fun DashboardScreenPreview() {
             onExerciseCardClick = {},
             onBackArrowClick = {},
             navController = NavController(LocalContext.current),
-            currentExercise = Exercise("Split",1),
+            currentExercise = Exercise("Split", 1),
             onFabClick = {},
             onExerciseCardLongClick = {}
         )

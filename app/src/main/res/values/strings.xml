@@ -7,6 +7,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="no_data">No data, press the button to add data!</string>
+
     <string name="add_workout">Create workout</string>
     <string name="fab_add_bmi">Add body info</string>
     <string name="fab">Add data</string>

@@ -2,6 +2,7 @@ package com.stoffe.gym.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -57,26 +59,26 @@ fun DashboardScreen(
             onFabItemClicked = onCreateBmi
         )
     )
-    if (workouts != null) {
-        val openAlertDialog = remember { mutableStateOf(false) }
-        val currentWorkout = remember { mutableStateOf(Workout("Test")) }
-        GymTheme {
-            Scaffold(
-                floatingActionButton = {
-                    MultiFloatingActionButton(
-                        fabIcon = painterResource(id = R.drawable.ic_baseline_add_24),
-                        items = fabItems
-                    )
-                },
-                floatingActionButtonPosition = FabPosition.End,
-                topBar = {
-                    CenterAlignedTopAppBar(
-                        title = { Text("Start page") },
-                    )
-                },
 
-                ) {
+    val openAlertDialog = remember { mutableStateOf(false) }
+    val currentWorkout = remember { mutableStateOf(Workout("Test")) }
+    GymTheme {
+        Scaffold(
+            floatingActionButton = {
+                MultiFloatingActionButton(
+                    fabIcon = painterResource(id = R.drawable.ic_baseline_add_24),
+                    items = fabItems
+                )
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = { Text("Start page") },
+                )
+            },
 
+            ) {
+            if (!workouts.isNullOrEmpty() || !bmi.isNullOrEmpty()) {
                 when {
                     openAlertDialog.value -> {
                         DeleteDialog(
@@ -101,29 +103,41 @@ fun DashboardScreen(
                             )
                         }
                     }
-
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.padding(paddingValues = it)
-                    ) {
-                        items(workouts) { workout ->
-                            GymCard(
-                                cardTitle = workout.name,
-                                subTitle = if (workout.lastTime != null) workout.lastTime.toString() else null,
-                                onCardClick = { onWorkoutCardClick(workout) },
-                                onCardLongClick = {
-                                    openAlertDialog.value = true
-                                    currentWorkout.value = workout
-                                                  },
-                                onFirstIconClick = { onWorkoutStartClick(workout) },
-                                onSecondIconClick = { /*TODO*/ },
-                                iconOne = if (workout.isActive) R.drawable.ic_stop else R.drawable.ic_play,
-                                iconTwo = null,
-                                isActive = workout.isActive
-                            )
+                    if (!workouts.isNullOrEmpty()) {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.padding(paddingValues = it)
+                        ) {
+                            items(workouts) { workout ->
+                                GymCard(
+                                    cardTitle = workout.name,
+                                    subTitle = if (workout.lastTime != null) workout.lastTime.toString() else null,
+                                    onCardClick = { onWorkoutCardClick(workout) },
+                                    onCardLongClick = {
+                                        openAlertDialog.value = true
+                                        currentWorkout.value = workout
+                                    },
+                                    onFirstIconClick = { onWorkoutStartClick(workout) },
+                                    onSecondIconClick = { /*TODO*/ },
+                                    iconOne = if (workout.isActive) R.drawable.ic_stop else R.drawable.ic_play,
+                                    iconTwo = null,
+                                    isActive = workout.isActive
+                                )
+                            }
                         }
                     }
                 }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues = it)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(id = R.string.no_data))
+                }
+
             }
 
         }
