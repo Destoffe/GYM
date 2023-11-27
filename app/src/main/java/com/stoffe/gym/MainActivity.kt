@@ -1,15 +1,18 @@
 package com.stoffe.gym
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.NavigationUiSaveStateControl
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.android.play.core.review.model.ReviewErrorCode
 import com.stoffe.gym.Helpers.UtilsNew
 
+
 class MainActivity : AppCompatActivity() {
+    @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,21 +39,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navigation_host) as NavHostFragment?
+        setupWithNavController(
+            findViewById<BottomNavigationView>(R.id.bottom_navigation) ,
+            navHostFragment!!.navController, false
+        )
+
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
-    }
 }
