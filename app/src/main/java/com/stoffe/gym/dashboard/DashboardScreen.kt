@@ -94,7 +94,7 @@ fun DashboardScreen(
                     }
                 }
                 Column() {
-                    if (bmi != null && bmi.isNotEmpty()) {
+                    if (!bmi.isNullOrEmpty()) {
                         bmi[0]?.let { it1 ->
                             BmiCard(
                                 bmi = it1,

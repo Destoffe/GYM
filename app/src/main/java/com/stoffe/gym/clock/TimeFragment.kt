@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
+import com.example.compose.GymTheme
 
 class TimeFragment: Fragment() {
 
@@ -14,11 +15,13 @@ class TimeFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                TimeScreen()
+                GymTheme {
+                    TimeScreen()
+                }
             }
         }
     }
